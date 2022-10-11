@@ -178,7 +178,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-11 10:38:16" itemprop="dateModified" datetime="2022-10-11T10:38:16+08:00">2022-10-11</time>
+                <time title="修改时间：2022-10-11 14:17:53" itemprop="dateModified" datetime="2022-10-11T14:17:53+08:00">2022-10-11</time>
               </span>
 
           
@@ -192,19 +192,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="得分函数"><a href="#得分函数" class="headerlink" title="得分函数"></a>得分函数</h1><ul>
-<li>$ f(x)&#x3D;Wx (+b) $<ul>
-<li>W为 n 行 m 列的权重参数矩阵，n 行代表有 n 个权重参数（类别）， m 代表有整个图像矩阵有 m 个像素点 （把原权重矩阵拉成 1 行 m 列）<ul>
+          <h1 id="得分函数"><a href="#得分函数" class="headerlink" title="得分函数"></a>得分函数</h1><h2 id="用来判断输入的矩阵属于什么类别"><a href="#用来判断输入的矩阵属于什么类别" class="headerlink" title="用来判断输入的矩阵属于什么类别"></a>用来判断输入的矩阵属于什么类别</h2><ul>
+<li>$$ f(x)&#x3D;Wx (+b) $$<ul>
+<li>W为 n 行 m 列的权重参数矩阵，n 行代表有 n 个权重参数（类别）, m 代表有整个图像矩阵有 m 个像素点 （把原权重矩阵拉成 1 行 m 列）<ul>
 <li>权重参数矩阵中，值较大的项表示，该像素点对该类别的影响比较重要。</li>
 </ul>
 </li>
-<li>$ x $ 为图像参数，为 n 行 1 列的矩阵（把原图像矩阵拉成 n 行 1 列）</li>
-<li>$ (+b) $ 为偏置参数（为 n 行 1 列， 与结果矩阵形式相同），用来微调</li>
-<li>$ f(x) $ 为运算结果， 是一个 n 行 1 列的矩阵（ n 行代表有 n 个类别）</li>
+<li>x 为图像参数，为 n 行 1 列的矩阵（把原图像矩阵拉成 n 行 1 列）</li>
+<li>(+b) 为偏置参数（为 n 行 1 列， 与结果矩阵形式相同），用来微调</li>
+<li>f(x) 为运算结果， 是一个 n 行 1 列的矩阵（ n 行代表有 n 个类别）</li>
 </ul>
 </li>
 </ul>
-
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h2 id="用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0"><a href="#用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0" class="headerlink" title="用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0"></a>用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</h2><ul>
+<li>$$ L_{i} &#x3D; \sum_{j \neq y_{i}} \max \left(0, s_{j}-s_{y_{i}}+1\right) $$</li>
+<li>$$ L&#x3D;\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)<em>{j}-f\left(x</em>{i} ; W\right)<em>{y</em>{i}}+1\right)+\lambda R(W) $$</li>
+</ul>
+<h1 id="Softmax分类器"><a href="#Softmax分类器" class="headerlink" title="Softmax分类器"></a>Softmax分类器</h1><ul>
+<li>$$ g(z)&#x3D;\frac{1}{1+e^{-z}} $$</li>
+</ul>
+<h1 id="基本流程1"><a href="#基本流程1" class="headerlink" title="基本流程1"></a>基本流程1</h1><h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><ul>
+<li>回归任务：用得分值计算损失<br>  $$ L&#x3D;\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)<em>{j}-f\left(x</em>{i} ; W\right)<em>{y</em>{i}}+1\right)+\lambda R(W) $$</li>
+<li>分类任务：用概率值计算损失<br>  $$ -log(z) $$</li>
+</ul>
+<h2 id="反向传播（链式求导）"><a href="#反向传播（链式求导）" class="headerlink" title="反向传播（链式求导）"></a>反向传播（链式求导）</h2>
       
     </div>
 
