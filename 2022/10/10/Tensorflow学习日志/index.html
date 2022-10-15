@@ -28,7 +28,7 @@
 <meta property="og:description" content="神经网络基础篇 层次结构 神经元，即用来计算的的项 全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。 非线性：有 $xw1w2w3$, 若有 $ w4 &#x3D; w1w2w3 $, 但不能用 $ w4 $ 替换 $w1w2*w3$.  得分函数用来判断输入的矩阵属于什么类别 f(x)&#x3D;Wx (+b) W为 n 行 m 列的权重参数矩阵">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-10T14:26:30.000Z">
-<meta property="article:modified_time" content="2022-10-13T15:54:33.870Z">
+<meta property="article:modified_time" content="2022-10-15T15:11:22.576Z">
 <meta property="article:author" content="BenSQ">
 <meta name="twitter:card" content="summary">
 
@@ -180,7 +180,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-13 23:54:33" itemprop="dateModified" datetime="2022-10-13T23:54:33+08:00">2022-10-13</time>
+                <time title="修改时间：2022-10-15 23:11:22" itemprop="dateModified" datetime="2022-10-15T23:11:22+08:00">2022-10-15</time>
               </span>
 
           
@@ -219,43 +219,92 @@
 </ul>
 </li>
 </ul>
-<h2 id="Softmax分类器"><a href="#Softmax分类器" class="headerlink" title="Softmax分类器"></a>Softmax分类器</h2><ul>
+<h2 id="Softmax分类器（内容有误，之后再改）"><a href="#Softmax分类器（内容有误，之后再改）" class="headerlink" title="Softmax分类器（内容有误，之后再改）"></a>Softmax分类器（内容有误，之后再改）</h2><ul>
 <li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $ 缺点：z过大或负向过大时，斜率基本为0，即梯度为0，则0之后的梯度都为0，认为不再传播，发生梯度消失现象。现已经不用了。</li>
 </ul>
 <h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><ul>
-<li>回归任务：用得分值计算损失  <script type="math/tex; mode=display">L=\frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)_{j}-f\left(x_{i} ; W\right)_{y_{i}}+1\right)+\lambda R(W)</script></li>
-<li>分类任务：用概率值计算损失 $ -log(z) $</li>
+<li>回归任务：用得分值计算损失。回归模型可预测连续值。  <script type="math/tex; mode=display">L=\frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)_{j}-f\left(x_{i} ; W\right)_{y_{i}}+1\right)+\lambda R(W)</script></li>
+<li>分类任务：用概率值计算损失 。分类模型可预测离散值。<script type="math/tex; mode=display">-log(z)</script></li>
 </ul>
 <h2 id="反向传播（链式求导）"><a href="#反向传播（链式求导）" class="headerlink" title="反向传播（链式求导）"></a>反向传播（链式求导）</h2><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><ul>
 <li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $</li>
-<li>Relu函数 $ \sigma(x)=\max (0, x) $</li>
+<li><p>Relu函数 $ \sigma(x)=\max (0, x) $</p>
+<p><br  /></p>
+</li>
 </ul>
 <h1 id="tensorflow篇"><a href="#tensorflow篇" class="headerlink" title="tensorflow篇"></a>tensorflow篇</h1><h2 id="名词释义"><a href="#名词释义" class="headerlink" title="名词释义"></a>名词释义</h2><ul>
-<li>张量（Tensor):多维数组（列表)<ul>
+<li>模型<ul>
+<li>模型定义了特征与标签之间的关系。</li>
+</ul>
+</li>
+<li><p>训练</p>
+<ul>
+<li>训练是指创建或学习模型。也就是说，向模型展示有标签样本，让模型逐渐学习特征与标签之间的关系。</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>张量（Tensor):多维数组（列表)</p>
+<ul>
 <li>阶:张量的维数<ul>
 <li>0阶：标量（scalar）</li>
 <li>1阶：向量（vector）</li>
 <li>2阶：矩阵（matrix）———— m = $[[1,2,3],[4,5,6],[7,8,9]]$</li>
-<li>n阶：张量（tensor）<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2></li>
+<li>n阶：张量（tensor）</li>
 </ul>
 </li>
 </ul>
+<p><br  /></p>
 </li>
-<li>数据类型：<ul>
+<li><p>axis：这是张量操作函数里的一个可选参数，用的时候进行赋值，如果不赋值，则默认对所有维度进行操作。</p>
+<ul>
+<li>两种理解方式：<ul>
+<li>1.若有二维数组或张量：axis=0，对数组第一个维度进行操作。axis=1，对数组第二个维度进行操作。</li>
+<li>2.若有二维数组或张量：axis=0，进行纵向操作。axis=1，进行横向操作。（两种理解方式都一样，对应的操作都一样）</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>参数里的维度</p>
+<ul>
+<li>参数里的维度的写入形式：[2, 3]（2行3列）</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>特征</p>
+<ul>
+<li>特征是输入变量，即简单线性回归中的 x 变量。 </li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>标签 </p>
+<ul>
+<li>标签是我们要预测的事物，即简单线性回归中的 y 变量。标签可以是小麦未来的价格、图片中显示的动物品种、音频剪辑的含义或任何事物, 即结论。</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
+<li><p>数据类型：</p>
+<ul>
 <li>(1)tf.int32, tf.float32, tf.float64…</li>
 <li>(2)tf.bool</li>
-<li>(3)tf.string<br><br /> </li>
+<li>(3)tf.string</li>
 </ul>
 </li>
-<li>创建张量：<ul>
+<li><p>创建张量：</p>
+<ul>
 <li>创建：tf.constant(张量内容，dtype=数据类型(可选))<ul>
 <li>例：a = tf.constant([1,5], dtype=tf.int64) —— 创建一阶张量</li>
 </ul>
 </li>
 <li>numpy转tensor：tf.convert to_ tensor(数据名，dtype=数据类型(可选))<ul>
-<li>例：b = tf.convert_to_tensor(a, dtype=tf.int64)<br><br /> </li>
+<li>例：b = tf.convert_to_tensor(a, dtype=tf.int64) </li>
 </ul>
 </li>
+</ul>
+<p><br  /></p>
+<ul>
 <li>1.创建全为0的张量：tf.zeros(维度)<ul>
 <li>tf.zeros(4)：创建全为0，长度为4的一阶张量</li>
 </ul>
@@ -265,16 +314,19 @@
 </ul>
 </li>
 <li>3.创建全为指定值的张量：tf.fill(维度, 指定值)<ul>
-<li>tf.fill([2,2], 9)：创建内容为9，一维为2个，二维为2个的二阶张量<br><br /> </li>
+<li>tf.fill([2,2], 9)：创建内容为9，一维为2个，二维为2个的二阶张量</li>
 </ul>
 </li>
+</ul>
+<p><br  /></p>
+<ul>
 <li>生成正态分布的随机数，默认均值为0，标准差为1<ul>
 <li>tf.random.normal(维度，mean=均值，stddev=标准差)</li>
 </ul>
 </li>
 <li>生成截断式正态分布的随机数<ul>
 <li>tf.random.truncated_normal(维度，mean=均值，stddev=标准差)<ul>
-<li>在tf.truncated_normal中如果随机生成数据的取值在$（u-2\sigma ，u+2\sigma ）$之外，则重新进行生成，保证了生成值在均值附近。<br><br /></li>
+<li>在tf.truncated_normal中如果随机生成数据的取值在$（u-2\sigma ，u+2\sigma ）$之外，则重新进行生成，保证了生成值在均值附近。</li>
 </ul>
 </li>
 </ul>
@@ -284,12 +336,86 @@
 </ul>
 </li>
 </ul>
+<p><br  /></p>
+</li>
+<li><p>张量间类型转换</p>
+<ul>
+<li>强制tensor的内容转换为该数据类型<ul>
+<li>tf.cast(张量名，dtype=数据类型)</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>寻找张量中特征值</p>
+<ul>
+<li>计算张量中元素的最小值<ul>
+<li>tf.reduce _min(张量名)</li>
+</ul>
+</li>
+<li>√计算张量中元素的最大值<ul>
+<li>tf.reduce_max(张量名)    </li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+<ul>
+<li>计算张量沿着指定维度的平均值<ul>
+<li>tf.reduce _mean(张量名(, axis=&lt;操作轴&gt;))</li>
+</ul>
+</li>
+<li>计算张量沿着指定维度的和<ul>
+<li>tf.reduce_sum（(张量名(, axis=操作轴))</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。</p>
+<ul>
+<li>tf.Variable(初始值)<ul>
+<li>例： W= tf.Variable(tf.random.normal([2, 2], mean=0, stddev=1))</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数学运算</p>
+<ul>
+<li>加、减、乘、除（四则运算，只有维度相同的张量才能进行四则运算）：<ul>
+<li>1.tf.add(张量1, 张量2)</li>
+<li>2.tf.subtract(张量1, 张量2)</li>
+<li>3.tf.multiply(张量1, 张量2) —— 不是矩阵乘法，而是相应位置相乘，下同理</li>
+<li>4.tf.divide(张量1, 张量2)</li>
+</ul>
+</li>
+<li>平方、n次方、开方：<ul>
+<li>1.tf.square(张量) —— 对相应位置进行操作， 下同理</li>
+<li>2.tf.pow(张量, n次方数)</li>
+<li>3.tf.sqrt(张量)</li>
+</ul>
+</li>
+<li>矩阵乘: <ul>
+<li>1.tf.matmul(矩阵1， 矩阵2) —— 要符合线代矩阵乘法规则</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对</p>
+<ul>
+<li>data = tf.data.Dataset.from_tensor_slices((输入特征,标签))</li>
+</ul>
 </li>
 </ul>
 <h2 id="搭建神经网络六步法"><a href="#搭建神经网络六步法" class="headerlink" title="搭建神经网络六步法"></a>搭建神经网络六步法</h2><ul>
-<li>import相关模块<br><br /> </li>
-<li>train、 test：告知要放入网络的训练集和测试集。指定训练集的的输入特征x_train和标签y_train、测试集的的输入特征x_test和标签y_test<br><br /> </li>
-<li>model = tf.keras.models.Sequential: 在Sequential中搭建网络结构，逐层描述每层网络（走一遍前向传播）<ul>
+<li><p>import相关模块</p>
+<p><br  /></p>
+</li>
+<li><p>train、 test：告知要放入网络的训练集和测试集。指定训练集的的输入特征x_train和标签y_train、测试集的的输入特征x_test和标签y_test</p>
+<p><br  /></p>
+</li>
+<li><p>model = tf.keras.models.Sequential: 在Sequential中搭建网络结构，逐层描述每层网络（走一遍前向传播）</p>
+<ul>
 <li>Sequential中封装了神经网络结构。<ul>
 <li>拉直层：tf.keras.layers.Flatten()，把输入特征拉直变成一维数组。</li>
 <li>全连接层：tf.keras.layers.Dense(神经元个数, ctivation=&lt;激活函数&gt;, kernel_regularizer=&lt;哪种正则化&gt;)<ul>
@@ -298,20 +424,33 @@
 </ul>
 </li>
 <li>卷积层：tf.keras,layers.Conv2D(filters=&lt;卷积核个数&gt;,kernel_size=&lt;卷积核步长&gt;, padding=”valid”/“same”)</li>
-<li>LSTM层(循环层)：tf.keras.layers.LSTM()<br><br /> </li>
+<li>LSTM层(循环层)：tf.keras.layers.LSTM()</li>
 </ul>
 </li>
 </ul>
+<p><br  /></p>
 </li>
-<li>model.compile: 在compile中配置训练方法：选择优化器、损失函数、评测指标。<ul>
-<li>model.compile(optimizzer=&lt;优化器&gt;, loss=&lt;损失函数&gt;, matrics=[“准确率”]) —— 详细参数解析见<br>(<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4）">https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4）</a><br><br /> </li>
+<li><p>model.compile: 在compile中配置训练方法：选择优化器、损失函数、评测指标。</p>
+<ul>
+<li>model.compile(optimizzer=&lt;优化器&gt;, loss=&lt;损失函数&gt;, matrics=[“准确率”]) —— 详细参数解析见<br>( <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4">https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4</a></li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>model.fit: 在fit中执行训练过程。告知训练集和测试集的输入特征和标签，和每个batch，迭代次数。</p>
+<ul>
+<li>model.fit(训练集的输入特征,训练集的标签，batch_size=, epochs=, validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq=多少次epoch测试一次)</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>model.summary: 打印出网络结构和参数统计。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
+<li>特征与标签配对是什么意思？<ul>
+<li>标签是用来标记特征是否有用的？</li>
 </ul>
 </li>
-<li>model.fit: 在fit中执行训练过程。告知训练集和测试集的输入特征和标签，和每个batch，迭代次数。<ul>
-<li>model.fit(训练集的输入特征,训练集的标签，batch_size=, epochs=, validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq=多少次epoch测试一次)<br><br /> </li>
-</ul>
-</li>
-<li>model.summary: 打印出网络结构和参数统计。</li>
 </ul>
 
     </div>
@@ -390,7 +529,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">神经网络基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%97%E5%88%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">得分函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BE%93%E5%85%A5%E7%9A%84%E7%9F%A9%E9%98%B5%E5%B1%9E%E4%BA%8E%E4%BB%80%E4%B9%88%E7%B1%BB%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">用来判断输入的矩阵属于什么类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E8%A1%A1%E9%87%8F%E8%AF%A5%E7%9B%AE%E5%89%8D%E8%AF%86%E5%88%AB%E5%87%BA%E6%9D%A5%E6%95%88%E6%9E%9C%E7%9A%84%E5%A5%BD%E5%9D%8F%EF%BC%8C%E5%80%BC%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD%EF%BC%8C%E8%8B%A5%E5%AE%8C%E5%85%A8%E6%AD%A3%E7%A1%AE%EF%BC%8C%E5%88%99%E5%80%BC%E4%B8%BA0"><span class="nav-number">1.2.1.</span> <span class="nav-text">用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">Softmax分类器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.4.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%88%E9%93%BE%E5%BC%8F%E6%B1%82%E5%AF%BC%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">反向传播（链式求导）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">tensorflow篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E9%87%8A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">名词释义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AD%E6%AD%A5%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">搭建神经网络六步法</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">神经网络基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%97%E5%88%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">得分函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BE%93%E5%85%A5%E7%9A%84%E7%9F%A9%E9%98%B5%E5%B1%9E%E4%BA%8E%E4%BB%80%E4%B9%88%E7%B1%BB%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">用来判断输入的矩阵属于什么类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E8%A1%A1%E9%87%8F%E8%AF%A5%E7%9B%AE%E5%89%8D%E8%AF%86%E5%88%AB%E5%87%BA%E6%9D%A5%E6%95%88%E6%9E%9C%E7%9A%84%E5%A5%BD%E5%9D%8F%EF%BC%8C%E5%80%BC%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD%EF%BC%8C%E8%8B%A5%E5%AE%8C%E5%85%A8%E6%AD%A3%E7%A1%AE%EF%BC%8C%E5%88%99%E5%80%BC%E4%B8%BA0"><span class="nav-number">1.2.1.</span> <span class="nav-text">用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88%E5%86%85%E5%AE%B9%E6%9C%89%E8%AF%AF%EF%BC%8C%E4%B9%8B%E5%90%8E%E5%86%8D%E6%94%B9%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Softmax分类器（内容有误，之后再改）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.4.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%88%E9%93%BE%E5%BC%8F%E6%B1%82%E5%AF%BC%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">反向传播（链式求导）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">tensorflow篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E9%87%8A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">名词释义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AD%E6%AD%A5%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">搭建神经网络六步法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
