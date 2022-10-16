@@ -178,7 +178,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-15 23:11:22" itemprop="dateModified" datetime="2022-10-15T23:11:22+08:00">2022-10-15</time>
+                <time title="修改时间：2022-10-16 10:22:20" itemprop="dateModified" datetime="2022-10-16T10:22:20+08:00">2022-10-16</time>
               </span>
 
           
@@ -282,126 +282,145 @@
 <p><br  /></p>
 </li>
 </ul>
-<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
-<li><p>数据类型：</p>
+<h2 id="穿插python语法"><a href="#穿插python语法" class="headerlink" title="穿插python语法"></a>穿插python语法</h2><h3 id="with结构"><a href="#with结构" class="headerlink" title="with结构"></a>with结构</h3><ul>
+<li><p>等效于try+finally。执行with后的语句，若不成功则自动关闭进程，不占用系统资源，也不会停止程序。</p>
 <ul>
+<li><code>with open( &#39;./test_runoob.txt&#39;, &#39;w&#39; ) as file: (换行缩进) file.write( &#39; hello world ! &#39;)</code></li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="enumerate-列表名"><a href="#enumerate-列表名" class="headerlink" title="enumerate(列表名)"></a>enumerate(列表名)</h3><ul>
+<li><p>enumerate是python的内建函数，它可遍历每个元素(如列表、元组或字符串)，返回2*len（列表）个值，组合为:索引 元素。常配合for循环中使用。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
+<li>数据类型：<ul>
 <li>(1)tf.int32, tf.float32, tf.float64…</li>
 <li>(2)tf.bool</li>
 <li>(3)tf.string</li>
 </ul>
 </li>
-<li><p>创建张量：</p>
+</ul>
+<h3 id="创建张量："><a href="#创建张量：" class="headerlink" title="创建张量："></a>创建张量：</h3><ul>
+<li>创建：<code>tf.constant(张量内容，dtype=数据类型(可选))</code><ul>
+<li>例：<code>a = tf.constant([1,5], dtype=tf.int64)</code> —— 创建一阶张量</li>
+</ul>
+</li>
+<li><p>numpy转tensor：<code>tf.convert to_ tensor(数据名，dtype=数据类型(可选))</code></p>
 <ul>
-<li>创建：tf.constant(张量内容，dtype=数据类型(可选))<ul>
-<li>例：a = tf.constant([1,5], dtype=tf.int64) —— 创建一阶张量</li>
-</ul>
-</li>
-<li>numpy转tensor：tf.convert to_ tensor(数据名，dtype=数据类型(可选))<ul>
-<li>例：b = tf.convert_to_tensor(a, dtype=tf.int64) </li>
-</ul>
-</li>
+<li>例：<code>b = tf.convert_to_tensor(a, dtype=tf.int64)</code></li>
 </ul>
 <p><br  /></p>
+</li>
+<li><p>1.创建全为0的张量：tf.zeros(维度)</p>
 <ul>
-<li>1.创建全为0的张量：tf.zeros(维度)<ul>
-<li>tf.zeros(4)：创建全为0，长度为4的一阶张量</li>
+<li><code>tf.zeros(4)</code>：创建全为0，长度为4的一阶张量</li>
 </ul>
 </li>
 <li>2.创建全为1的张量：tf.ones(维度)<ul>
-<li>tf.ones([2,3])：创建全为1，一维为2个，二维为3个的二阶张量</li>
+<li><code>tf.ones([2,3])</code>：创建全为1，一维为2个，二维为3个的二阶张量</li>
 </ul>
 </li>
-<li>3.创建全为指定值的张量：tf.fill(维度, 指定值)<ul>
-<li>tf.fill([2,2], 9)：创建内容为9，一维为2个，二维为2个的二阶张量</li>
-</ul>
-</li>
+<li><p>3.创建全为指定值的张量：tf.fill(维度, 指定值)</p>
+<ul>
+<li><code>tf.fill([2,2], 9)</code>：创建内容为9，一维为2个，二维为2个的二阶张量</li>
 </ul>
 <p><br  /></p>
+</li>
+<li><p>生成正态分布的随机数，默认均值为0，标准差为1</p>
 <ul>
-<li>生成正态分布的随机数，默认均值为0，标准差为1<ul>
-<li>tf.random.normal(维度，mean=均值，stddev=标准差)</li>
+<li><code>tf.random.normal(维度，mean=均值，stddev=标准差)</code></li>
 </ul>
 </li>
 <li>生成截断式正态分布的随机数<ul>
-<li>tf.random.truncated_normal(维度，mean=均值，stddev=标准差)<ul>
+<li><code>tf.random.truncated_normal(维度，mean=均值，stddev=标准差)</code><ul>
 <li>在tf.truncated_normal中如果随机生成数据的取值在$（u-2\sigma ，u+2\sigma ）$之外，则重新进行生成，保证了生成值在均值附近。</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>生成均匀分布随机数<ul>
-<li>tf.random.uniform(维度，minval=最小值，maxval=最大值)</li>
-</ul>
-</li>
+<li><p>生成均匀分布随机数</p>
+<ul>
+<li><code>tf.random.uniform(维度，minval=最小值，maxval=最大值)</code></li>
 </ul>
 <p><br  /></p>
 </li>
-<li><p>张量间类型转换</p>
-<ul>
-<li>强制tensor的内容转换为该数据类型<ul>
-<li>tf.cast(张量名，dtype=数据类型)</li>
 </ul>
-</li>
+<h3 id="张量间类型转换"><a href="#张量间类型转换" class="headerlink" title="张量间类型转换"></a>张量间类型转换</h3><ul>
+<li><p>强制tensor的内容转换为该数据类型</p>
+<ul>
+<li><code>tf.cast(张量名，dtype=数据类型)</code></li>
 </ul>
 <p><br  /></p>
 </li>
-<li><p>寻找张量中特征值</p>
-<ul>
+</ul>
+<h3 id="寻找张量中的特殊值"><a href="#寻找张量中的特殊值" class="headerlink" title="寻找张量中的特殊值"></a>寻找张量中的特殊值</h3><ul>
 <li>计算张量中元素的最小值<ul>
-<li>tf.reduce _min(张量名)</li>
+<li><code>tf.reduce _min(张量名)</code></li>
 </ul>
 </li>
-<li>√计算张量中元素的最大值<ul>
-<li>tf.reduce_max(张量名)    </li>
-</ul>
-</li>
-</ul>
-<p><br  /></p>
+<li><p>计算张量中元素的最大值</p>
 <ul>
-<li>计算张量沿着指定维度的平均值<ul>
-<li>tf.reduce _mean(张量名(, axis=&lt;操作轴&gt;))</li>
-</ul>
-</li>
-<li>计算张量沿着指定维度的和<ul>
-<li>tf.reduce_sum（(张量名(, axis=操作轴))</li>
-</ul>
-</li>
+<li><code>tf.reduce_max(张量名)</code>  </li>
 </ul>
 <p><br  /></p>
 </li>
-<li><p>将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。</p>
+<li><p>计算张量沿着指定维度的平均值</p>
 <ul>
-<li>tf.Variable(初始值)<ul>
-<li>例： W= tf.Variable(tf.random.normal([2, 2], mean=0, stddev=1))</li>
+<li><code>tf.reduce _mean(张量名(, axis=&lt;操作轴&gt;))</code></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>数学运算</p>
+<li><p>计算张量沿着指定维度的和</p>
 <ul>
+<li><code>tf.reduce_sum（(张量名(, axis=操作轴))</code></li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。"><a href="#将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。" class="headerlink" title="将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。"></a>将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。</h3><ul>
+<li><pre><code class="lang-tf.Variable(初始值)```">+ 例： ```W= tf.Variable(tf.random.normal([2, 2], mean=0, stddev=1))
+</code></pre>
+</li>
+</ul>
+<h3 id="简单数学运算"><a href="#简单数学运算" class="headerlink" title="简单数学运算"></a>简单数学运算</h3><ul>
 <li>加、减、乘、除（四则运算，只有维度相同的张量才能进行四则运算）：<ul>
-<li>1.tf.add(张量1, 张量2)</li>
-<li>2.tf.subtract(张量1, 张量2)</li>
-<li>3.tf.multiply(张量1, 张量2) —— 不是矩阵乘法，而是相应位置相乘，下同理</li>
-<li>4.tf.divide(张量1, 张量2)</li>
+<li>1.<code>tf.add(张量1, 张量2)</code></li>
+<li>2.<code>tf.subtract(张量1, 张量2)</code></li>
+<li>3.<code>tf.multiply(张量1, 张量2)</code> —— 不是矩阵乘法，而是相应位置相乘，下同理</li>
+<li>4.<code>tf.divide(张量1, 张量2)</code></li>
 </ul>
 </li>
 <li>平方、n次方、开方：<ul>
-<li>1.tf.square(张量) —— 对相应位置进行操作， 下同理</li>
-<li>2.tf.pow(张量, n次方数)</li>
-<li>3.tf.sqrt(张量)</li>
+<li>1.<code>tf.square(张量)</code> —— 对相应位置进行操作， 下同理</li>
+<li>2.<code>tf.pow(张量, n次方数)</code></li>
+<li>3.<code>tf.sqrt(张量)</code></li>
 </ul>
 </li>
-<li>矩阵乘: <ul>
-<li>1.tf.matmul(矩阵1， 矩阵2) —— 要符合线代矩阵乘法规则</li>
-</ul>
-</li>
+<li><p>矩阵乘: </p>
+<ul>
+<li>1.<code>tf.matmul(矩阵1， 矩阵2)</code> —— 要符合线代矩阵乘法规则</li>
 </ul>
 <p><br  /></p>
 </li>
-<li><p>切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对</p>
+</ul>
+<h3 id="求导运算（求梯度）"><a href="#求导运算（求梯度）" class="headerlink" title="求导运算（求梯度）"></a>求导运算（求梯度）</h3><ul>
+<li><p>常在with结构下使用tf.GradientTape()来求梯度：with结构记录计算过程，gradient求出张量的梯度</p>
 <ul>
-<li>data = tf.data.Dataset.from_tensor_slices((输入特征,标签))</li>
+<li>‘’<code>with tf.GradientTape( ) as tape:</code>‘’<br><br>  &emsp;<code>(若干个计算过程)</code><br><br>  &emsp;<code>grad = tape.gradient(函数（损失函数？）, 对谁求导)</code></li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="切分传入张量的第一维度，生成输入特征标签对，构建数据集-Numpy和Tensor格式都可用该语句读入数据）——-相应位置一一配对"><a href="#切分传入张量的第一维度，生成输入特征标签对，构建数据集-Numpy和Tensor格式都可用该语句读入数据）——-相应位置一一配对" class="headerlink" title="切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对"></a>切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对</h3><ul>
+<li><p><code>data = tf.data.Dataset.from_tensor_slices((输入特征,标签))</code></p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="独热编码（one-hot-encoding）-在分类问题中，常用独热码做标签-标记类别-1表示是，0表示非。"><a href="#独热编码（one-hot-encoding）-在分类问题中，常用独热码做标签-标记类别-1表示是，0表示非。" class="headerlink" title="独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。"></a>独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。</h3><ul>
+<li><code>tf.one_hot(待转换数据, depth=几分类)</code><ul>
+<li>tf.one_hot()函数将待转换数据，转换为one-hot形式的数据输出。<br><br><img src="E:/Blog_pics/独热码示例" alt="示例" title="图片title"><br><br  /></li>
 </ul>
 </li>
 </ul>
@@ -412,31 +431,33 @@
 <li><p>train、 test：告知要放入网络的训练集和测试集。指定训练集的的输入特征x_train和标签y_train、测试集的的输入特征x_test和标签y_test</p>
 <p><br  /></p>
 </li>
-<li><p>model = tf.keras.models.Sequential: 在Sequential中搭建网络结构，逐层描述每层网络（走一遍前向传播）</p>
+</ul>
+<p>+<code>model = tf.keras.models.Sequential</code>: 在Sequential中搭建网络结构，逐层描述每层网络（走一遍前向传播）</p>
 <ul>
-<li>Sequential中封装了神经网络结构。<ul>
-<li>拉直层：tf.keras.layers.Flatten()，把输入特征拉直变成一维数组。</li>
-<li>全连接层：tf.keras.layers.Dense(神经元个数, ctivation=&lt;激活函数&gt;, kernel_regularizer=&lt;哪种正则化&gt;)<ul>
+<li><p>Sequential中封装了神经网络结构。</p>
+<ul>
+<li>拉直层：<code>tf.keras.layers.Flatten()</code>，把输入特征拉直变成一维数组。</li>
+<li>全连接层：<code>tf.keras.layers.Dense(神经元个数, ctivation=&lt;激活函数&gt;, kernel_regularizer=&lt;哪种正则化&gt;)</code><ul>
 <li>activation可选：relu, sogmoid, softmax, tanh…</li>
 <li>kernel_regularizer可选:tf.keras.regularizers.’1(), tf.keras.regularizers.l2()…</li>
 </ul>
 </li>
-<li>卷积层：tf.keras,layers.Conv2D(filters=&lt;卷积核个数&gt;,kernel_size=&lt;卷积核步长&gt;, padding=”valid”/“same”)</li>
-<li>LSTM层(循环层)：tf.keras.layers.LSTM()</li>
-</ul>
-</li>
+<li>卷积层：<code>tf.keras,layers.Conv2D(filters=&lt;卷积核个数&gt;,kernel_size=&lt;卷积核步长&gt;, padding=&quot;valid&quot;/&quot;same&quot;)</code></li>
+<li>LSTM层(循环层)：<code>tf.keras.layers.LSTM()</code></li>
 </ul>
 <p><br  /></p>
 </li>
+</ul>
+<ul>
 <li><p>model.compile: 在compile中配置训练方法：选择优化器、损失函数、评测指标。</p>
 <ul>
-<li>model.compile(optimizzer=&lt;优化器&gt;, loss=&lt;损失函数&gt;, matrics=[“准确率”]) —— 详细参数解析见<br>( <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4">https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4</a></li>
+<li><code>model.compile(optimizzer=&lt;优化器&gt;, loss=&lt;损失函数&gt;, matrics=[&quot;准确率&quot;])</code> —— 详细参数解析见<br>( <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4">https://www.bilibili.com/video/BV1B7411L7Qt?p=15&amp;vd_source=28e3d226a5d356b023f32eac68624fb4</a></li>
 </ul>
 <p><br  /></p>
 </li>
 <li><p>model.fit: 在fit中执行训练过程。告知训练集和测试集的输入特征和标签，和每个batch，迭代次数。</p>
 <ul>
-<li>model.fit(训练集的输入特征,训练集的标签，batch_size=, epochs=, validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq=多少次epoch测试一次)</li>
+<li><code>model.fit(训练集的输入特征,训练集的标签，batch_size=, epochs=, validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq=多少次epoch测试一次)</code></li>
 </ul>
 <p><br  /></p>
 </li>
@@ -444,13 +465,12 @@
 <p><br  /></p>
 </li>
 </ul>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
-<li>特征与标签配对是什么意思？<ul>
-<li>标签是用来标记特征是否有用的？</li>
-</ul>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="特征与标签配对是什么意思？"><a href="#特征与标签配对是什么意思？" class="headerlink" title="特征与标签配对是什么意思？"></a>特征与标签配对是什么意思？</h2><ul>
+<li><p>标签是用来标记特征是否有用的？</p>
+<p><br  /></p>
 </li>
 </ul>
-
+<h2 id="tf-GradientTape-一定要在with结构下使用吗？"><a href="#tf-GradientTape-一定要在with结构下使用吗？" class="headerlink" title="tf.GradientTape( )一定要在with结构下使用吗？"></a>tf.GradientTape( )一定要在with结构下使用吗？</h2>
       
     </div>
 
