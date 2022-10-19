@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="神经网络基础篇 层次结构 神经元，即用来计算的的项 全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。 非线性：有 $xw1w2w3$, 若有 $ w4 &#x3D; w1w2w3 $, 但不能用 $ w4 $ 替换 $w1w2*w3$.  得分函数用来判断输入的矩阵属于什么类别 f(x)&#x3D;Wx (+b) W为 n 行 m 列的权重参数矩阵">
+  <meta name="description" content="神经网络基础篇名词示意权重线 概况 层次结构 神经元，即用来计算的的项 全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。 非线性：有 $xw1w2w3$, 若有 $ w4 &#x3D; w1w2w3 $, 但不能用 $ w4 $ 替换 $w1w2*w3$.    得分函数用来判断输入的矩阵属于什么类别 f(x)&#x3D;Wx (+b) W为 n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tensorflow学习日志">
 <meta property="og:url" content="http://example.com/2022/10/10/Tensorflow%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.html">
 <meta property="og:site_name" content="午睡是一门学问">
-<meta property="og:description" content="神经网络基础篇 层次结构 神经元，即用来计算的的项 全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。 非线性：有 $xw1w2w3$, 若有 $ w4 &#x3D; w1w2w3 $, 但不能用 $ w4 $ 替换 $w1w2*w3$.  得分函数用来判断输入的矩阵属于什么类别 f(x)&#x3D;Wx (+b) W为 n 行 m 列的权重参数矩阵">
+<meta property="og:description" content="神经网络基础篇名词示意权重线 概况 层次结构 神经元，即用来计算的的项 全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。 非线性：有 $xw1w2w3$, 若有 $ w4 &#x3D; w1w2w3 $, 但不能用 $ w4 $ 替换 $w1w2*w3$.    得分函数用来判断输入的矩阵属于什么类别 f(x)&#x3D;Wx (+b) W为 n">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="e:/Blog_pics/%E7%8B%AC%E7%83%AD%E7%A0%81%E7%A4%BA%E4%BE%8B">
+<meta property="og:image" content="https://note.youdao.com/s/cdefIVvi">
+<meta property="og:image" content="https://note.youdao.com/s/O3Y395gR">
 <meta property="article:published_time" content="2022-10-10T14:26:30.000Z">
-<meta property="article:modified_time" content="2022-10-16T02:22:20.296Z">
+<meta property="article:modified_time" content="2022-10-19T08:31:44.386Z">
 <meta property="article:author" content="BenSQ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="e:/Blog_pics/%E7%8B%AC%E7%83%AD%E7%A0%81%E7%A4%BA%E4%BE%8B">
+<meta name="twitter:image" content="https://note.youdao.com/s/cdefIVvi">
 
 <link rel="canonical" href="http://example.com/2022/10/10/Tensorflow%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/">
 
@@ -182,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-16 10:22:20" itemprop="dateModified" datetime="2022-10-16T10:22:20+08:00">2022-10-16</time>
+                <time title="修改时间：2022-10-19 16:31:44" itemprop="dateModified" datetime="2022-10-19T16:31:44+08:00">2022-10-19</time>
               </span>
 
           
@@ -196,11 +197,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="神经网络基础篇"><a href="#神经网络基础篇" class="headerlink" title="神经网络基础篇"></a>神经网络基础篇</h1><ul>
+        <h1 id="神经网络基础篇"><a href="#神经网络基础篇" class="headerlink" title="神经网络基础篇"></a>神经网络基础篇</h1><h2 id="名词示意"><a href="#名词示意" class="headerlink" title="名词示意"></a>名词示意</h2><h3 id="权重线"><a href="#权重线" class="headerlink" title="权重线"></a>权重线</h3><ul>
+<li><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><ul>
 <li>层次结构</li>
 <li>神经元，即用来计算的的项</li>
 <li>全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。</li>
 <li>非线性：有 $x<em>w1</em>w2<em>w3$, 若有 $ w4 = w1</em>w2<em>w3 $, 但不能用 $ w4 $ 替换 $w1</em>w2*w3$.</li>
+</ul>
+</li>
 </ul>
 <h2 id="得分函数"><a href="#得分函数" class="headerlink" title="得分函数"></a>得分函数</h2><h3 id="用来判断输入的矩阵属于什么类别"><a href="#用来判断输入的矩阵属于什么类别" class="headerlink" title="用来判断输入的矩阵属于什么类别"></a>用来判断输入的矩阵属于什么类别</h3><ul>
 <li><script type="math/tex; mode=display">f(x)=Wx (+b)</script><ul>
@@ -222,29 +226,67 @@
 </li>
 </ul>
 <h2 id="Softmax分类器（内容有误，之后再改）"><a href="#Softmax分类器（内容有误，之后再改）" class="headerlink" title="Softmax分类器（内容有误，之后再改）"></a>Softmax分类器（内容有误，之后再改）</h2><ul>
-<li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $ 缺点：z过大或负向过大时，斜率基本为0，即梯度为0，则0之后的梯度都为0，认为不再传播，发生梯度消失现象。现已经不用了。</li>
+<li>$\operatorname{Softmax}\left(\mathrm{y}<em>{\mathrm{i}}\right)=\frac{\mathrm{e}^{y</em>{i}}}{\sum<em>{\mathrm{j}=0}^{n} \mathrm{e}^{y</em>{i}}} $</li>
 </ul>
 <h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><ul>
 <li>回归任务：用得分值计算损失。回归模型可预测连续值。  <script type="math/tex; mode=display">L=\frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)_{j}-f\left(x_{i} ; W\right)_{y_{i}}+1\right)+\lambda R(W)</script></li>
 <li>分类任务：用概率值计算损失 。分类模型可预测离散值。<script type="math/tex; mode=display">-log(z)</script></li>
 </ul>
 <h2 id="反向传播（链式求导）"><a href="#反向传播（链式求导）" class="headerlink" title="反向传播（链式求导）"></a>反向传播（链式求导）</h2><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><ul>
-<li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $</li>
+<li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $<ul>
+<li><code>tf.nn.sigmoid(x)</code> #现在基本不再使用<ul>
+<li><img src="https://note.youdao.com/s/cdefIVvi" alt="示例"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><ol>
+<li>“梯度消失”现象: z过大或负向过大时，斜率基本为0，即梯度为0，则0之后的梯度都为0，认为不再传播.<ol>
+<li>输出非0均值，收敛慢</li>
+<li>幂运算复杂，训练时间长</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
 <li><p>Relu函数 $ \sigma(x)=\max (0, x) $</p>
 <p><br  /></p>
 </li>
 </ul>
-<h1 id="tensorflow篇"><a href="#tensorflow篇" class="headerlink" title="tensorflow篇"></a>tensorflow篇</h1><h2 id="名词释义"><a href="#名词释义" class="headerlink" title="名词释义"></a>名词释义</h2><ul>
-<li>模型<ul>
-<li>模型定义了特征与标签之间的关系。</li>
+<h2 id="神经网络复杂度"><a href="#神经网络复杂度" class="headerlink" title="神经网络复杂度"></a>神经网络复杂度</h2><ul>
+<li><p>统计神经网络时，只统计有计算能力的层次，即忽略输入层。</p>
+<ul>
+<li>空间复杂度<ul>
+<li>层数 = n个隐藏层 + 1个输出层。</li>
+<li>总参数 = 总的w数 + 总的b数</li>
 </ul>
 </li>
-<li><p>训练</p>
-<ul>
-<li>训练是指创建或学习模型。也就是说，向模型展示有标签样本，让模型逐渐学习特征与标签之间的关系。</li>
+<li>时间复杂度<ul>
+<li>乘加运算次数</li>
+</ul>
+</li>
 </ul>
 <p><br  /></p>
 </li>
+</ul>
+<h2 id="学习率及权重更新"><a href="#学习率及权重更新" class="headerlink" title="学习率及权重更新"></a>学习率及权重更新</h2><ul>
+<li>$ w<em>{t+1}=w</em>{t}-\operatorname{lr} * \frac{\partial \operatorname{loss}}{\partial w_{t}} $ #lr为学习率，即每次更新的跨度。过小会慢，过大会不收敛。？</li>
+<li>可以先用较大的学习率，快速得到较优解，然后逐步减小学习率，使模型在训练后期稳定。</li>
+<li>寻找合适的学习率<ul>
+<li>指数衰减学习率=初始学习率*学习率衰减率（当前轮数/多少轮衰减一次）<h1 id="tensorflow篇"><a href="#tensorflow篇" class="headerlink" title="tensorflow篇"></a>tensorflow篇</h1><h2 id="名词释义"><a href="#名词释义" class="headerlink" title="名词释义"></a>名词释义</h2></li>
+<li>模型</li>
+</ul>
+</li>
+<li>模型定义了特征与标签之间的关系。<ul>
+<li>训练</li>
+</ul>
+</li>
+<li><p>训练是指创建或学习模型。也就是说，向模型展示有标签样本，让模型逐渐学习特征与标签之间的关系。</p>
+<p><br  /></p>
+</li>
+</ul>
+<ul>
 <li><p>张量（Tensor):多维数组（列表)</p>
 <ul>
 <li>阶:张量的维数<ul>
@@ -298,6 +340,29 @@
 <li><p>enumerate是python的内建函数，它可遍历每个元素(如列表、元组或字符串)，返回2*len（列表）个值，组合为:索引 元素。常配合for循环中使用。</p>
 <p><br  /></p>
 </li>
+</ul>
+<h2 id="pandas库：处理数据的拓展库（可处理exel表格数据）"><a href="#pandas库：处理数据的拓展库（可处理exel表格数据）" class="headerlink" title="pandas库：处理数据的拓展库（可处理exel表格数据）"></a>pandas库：处理数据的拓展库（可处理exel表格数据）</h2><h3 id="读取目标文件"><a href="#读取目标文件" class="headerlink" title="读取目标文件"></a>读取目标文件</h3><ul>
+<li><p><code>df=pd.read_csv(&#39;path&#39;)</code></p>
+<p><br  /></p>
+<h3 id="dataframe格式"><a href="#dataframe格式" class="headerlink" title="dataframe格式"></a>dataframe格式</h3><p><br  /></p>
+</li>
+</ul>
+<h2 id="numpy库"><a href="#numpy库" class="headerlink" title="numpy库"></a>numpy库</h2><h3 id="np-random-RandomState-rand-维度-维度为空，返回标量"><a href="#np-random-RandomState-rand-维度-维度为空，返回标量" class="headerlink" title="np.random.RandomState.rand(维度)  #维度为空，返回标量"></a>np.random.RandomState.rand(维度)  #维度为空，返回标量</h3><ul>
+<li><p><code>rdm=np.random.RandomState(seed=1)</code> #seed=常数, 每次生成随机数相同</p>
+<ul>
+<li>例子：<code>a=rdm.rand()</code>#返回一个随机标量</li>
+<li>例子：<code>b=rdm.rand(2,3)</code>#返回维度为2行3列随机数矩阵</li>
+</ul>
+<p><br  /></p>
+<h3 id="np-vstack-数组1，数组2-：将两个数组按垂直方向叠加（相接）"><a href="#np-vstack-数组1，数组2-：将两个数组按垂直方向叠加（相接）" class="headerlink" title="np.vstack(数组1，数组2)：将两个数组按垂直方向叠加（相接）"></a>np.vstack(数组1，数组2)：将两个数组按垂直方向叠加（相接）</h3></li>
+<li><p>注意：不是数值相加，而是直接接上去</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="np-mgrid-，np-mgrid-，np-c"><a href="#np-mgrid-，np-mgrid-，np-c" class="headerlink" title="np.mgrid[]，np.mgrid[]，np.c_[]"></a>np.mgrid[]，np.mgrid[]，np.c_[]</h2><ul>
+<li>x, y = np.mgrid[起始值:结束值:步长, 起始值:结束值:步长，…]</li>
+<li>x.ravel()将x变为一维数组，“把.前变量拉直”</li>
+<li>np.c_[x.ravel, y.ravel]使返回的间隔数值点配对(返回n行2列的列表)</li>
 </ul>
 <h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><ul>
 <li>数据类型：<ul>
@@ -361,13 +426,20 @@
 </li>
 </ul>
 <h3 id="寻找张量中的特殊值"><a href="#寻找张量中的特殊值" class="headerlink" title="寻找张量中的特殊值"></a>寻找张量中的特殊值</h3><ul>
-<li>计算张量中元素的最小值<ul>
+<li><p>计算张量中元素的最小值</p>
+<ul>
 <li><code>tf.reduce _min(张量名)</code></li>
 </ul>
+<p><br  /></p>
 </li>
 <li><p>计算张量中元素的最大值</p>
 <ul>
 <li><code>tf.reduce_max(张量名)</code>  </li>
+</ul>
+</li>
+<li><p>返回张量沿指定维度最大值的索引(np类型也可用)</p>
+<ul>
+<li><code>tf.argmax(张量名,axis=操作轴)</code></li>
 </ul>
 <p><br  /></p>
 </li>
@@ -423,9 +495,32 @@
 </li>
 </ul>
 <h3 id="独热编码（one-hot-encoding）-在分类问题中，常用独热码做标签-标记类别-1表示是，0表示非。"><a href="#独热编码（one-hot-encoding）-在分类问题中，常用独热码做标签-标记类别-1表示是，0表示非。" class="headerlink" title="独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。"></a>独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。</h3><ul>
-<li><code>tf.one_hot(待转换数据, depth=几分类)</code><ul>
-<li>tf.one_hot()函数将待转换数据，转换为one-hot形式的数据输出。<br><br><img src="E:/Blog_pics/独热码示例" alt="示例" title="图片title"><br><br  /></li>
+<li><p><code>tf.one_hot(待转换数据, depth=几分类)</code></p>
+<ul>
+<li>tf.one_hot()函数将待转换数据，转换为one-hot形式的数据输出。<br><br><img src="https://note.youdao.com/s/O3Y395gR" alt="示例"></li>
 </ul>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="tf-nn-softmax-x-使输出符合概率分布，有多少个分类就用多少个返回值"><a href="#tf-nn-softmax-x-使输出符合概率分布，有多少个分类就用多少个返回值" class="headerlink" title="tf.nn.softmax(x) - 使输出符合概率分布，有多少个分类就用多少个返回值"></a><code>tf.nn.softmax(x)</code> - 使输出符合概率分布，有多少个分类就用多少个返回值</h3><ul>
+<li><p>通过前向传播，得出得分值，通过 $ \operatorname{Softmax}\left(\mathrm{y}<em>{\mathrm{i}}\right)=\frac{\mathrm{e}^{y</em>{i}}}{\sum<em>{\mathrm{j}=0}^{n} \mathrm{e}^{y</em>{i}}} $ 转换成符合概率分布的值。符合概率分布的值和为一。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="assign-sub-x-要自减的值"><a href="#assign-sub-x-要自减的值" class="headerlink" title="assign_sub(x(要自减的值))"></a><code>assign_sub(x(要自减的值))</code></h3><ul>
+<li>自减并返回更新后的值</li>
+<li><p>调用assign _sub前，先用tf.Variable定义变量w为可训练（可自更新）。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="条件语句-tf-where"><a href="#条件语句-tf-where" class="headerlink" title="条件语句 tf.where()"></a>条件语句 tf.where()</h2><ul>
+<li><p>tf.where(条件, 返回值a, 返回值b) —— 若真返回a，若假返回b</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="判断值大小tf-greater-a-b"><a href="#判断值大小tf-greater-a-b" class="headerlink" title="判断值大小tf.greater(a,b)"></a>判断值大小tf.greater(a,b)</h2><ul>
+<li><p>若a &gt; b, 则返回true，否则为false</p>
+<p><br  /></p>
 </li>
 </ul>
 <h2 id="搭建神经网络六步法"><a href="#搭建神经网络六步法" class="headerlink" title="搭建神经网络六步法"></a>搭建神经网络六步法</h2><ul>
@@ -551,7 +646,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">神经网络基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%97%E5%88%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">得分函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BE%93%E5%85%A5%E7%9A%84%E7%9F%A9%E9%98%B5%E5%B1%9E%E4%BA%8E%E4%BB%80%E4%B9%88%E7%B1%BB%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">用来判断输入的矩阵属于什么类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E8%A1%A1%E9%87%8F%E8%AF%A5%E7%9B%AE%E5%89%8D%E8%AF%86%E5%88%AB%E5%87%BA%E6%9D%A5%E6%95%88%E6%9E%9C%E7%9A%84%E5%A5%BD%E5%9D%8F%EF%BC%8C%E5%80%BC%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD%EF%BC%8C%E8%8B%A5%E5%AE%8C%E5%85%A8%E6%AD%A3%E7%A1%AE%EF%BC%8C%E5%88%99%E5%80%BC%E4%B8%BA0"><span class="nav-number">1.2.1.</span> <span class="nav-text">用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88%E5%86%85%E5%AE%B9%E6%9C%89%E8%AF%AF%EF%BC%8C%E4%B9%8B%E5%90%8E%E5%86%8D%E6%94%B9%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Softmax分类器（内容有误，之后再改）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.4.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%88%E9%93%BE%E5%BC%8F%E6%B1%82%E5%AF%BC%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">反向传播（链式求导）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">激活函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">tensorflow篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E9%87%8A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">名词释义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BF%E6%8F%92python%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">穿插python语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#with%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.1.</span> <span class="nav-text">with结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enumerate-%E5%88%97%E8%A1%A8%E5%90%8D"><span class="nav-number">2.2.2.</span> <span class="nav-text">enumerate(列表名)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BC%A0%E9%87%8F%EF%BC%9A"><span class="nav-number">2.3.1.</span> <span class="nav-text">创建张量：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F%E9%97%B4%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.3.2.</span> <span class="nav-text">张量间类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%BC%A0%E9%87%8F%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E5%80%BC"><span class="nav-number">2.3.3.</span> <span class="nav-text">寻找张量中的特殊值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E6%A0%87%E8%AE%B0%E4%B8%BA%E2%80%9C%E5%8F%AF%E8%AE%AD%E7%BB%83%E2%80%9D%EF%BC%9A%E8%A2%AB%E6%A0%87%E8%AE%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E5%9C%A8%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%AD%E8%AE%B0%E5%BD%95%E6%A2%AF%E5%BA%A6%E4%BF%A1%E6%81%AF%E3%80%82"><span class="nav-number">2.3.4.</span> <span class="nav-text">将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97"><span class="nav-number">2.3.5.</span> <span class="nav-text">简单数学运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC%E8%BF%90%E7%AE%97%EF%BC%88%E6%B1%82%E6%A2%AF%E5%BA%A6%EF%BC%89"><span class="nav-number">2.3.6.</span> <span class="nav-text">求导运算（求梯度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E5%88%86%E4%BC%A0%E5%85%A5%E5%BC%A0%E9%87%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%BB%B4%E5%BA%A6%EF%BC%8C%E7%94%9F%E6%88%90%E8%BE%93%E5%85%A5%E7%89%B9%E5%BE%81%E6%A0%87%E7%AD%BE%E5%AF%B9%EF%BC%8C%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E9%9B%86-Numpy%E5%92%8CTensor%E6%A0%BC%E5%BC%8F%E9%83%BD%E5%8F%AF%E7%94%A8%E8%AF%A5%E8%AF%AD%E5%8F%A5%E8%AF%BB%E5%85%A5%E6%95%B0%E6%8D%AE%EF%BC%89%E2%80%94%E2%80%94-%E7%9B%B8%E5%BA%94%E4%BD%8D%E7%BD%AE%E4%B8%80%E4%B8%80%E9%85%8D%E5%AF%B9"><span class="nav-number">2.3.7.</span> <span class="nav-text">切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81%EF%BC%88one-hot-encoding%EF%BC%89-%E5%9C%A8%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%B8%AD%EF%BC%8C%E5%B8%B8%E7%94%A8%E7%8B%AC%E7%83%AD%E7%A0%81%E5%81%9A%E6%A0%87%E7%AD%BE-%E6%A0%87%E8%AE%B0%E7%B1%BB%E5%88%AB-1%E8%A1%A8%E7%A4%BA%E6%98%AF%EF%BC%8C0%E8%A1%A8%E7%A4%BA%E9%9D%9E%E3%80%82"><span class="nav-number">2.3.8.</span> <span class="nav-text">独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AD%E6%AD%A5%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">搭建神经网络六步法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E4%B8%8E%E6%A0%87%E7%AD%BE%E9%85%8D%E5%AF%B9%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">特征与标签配对是什么意思？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-GradientTape-%E4%B8%80%E5%AE%9A%E8%A6%81%E5%9C%A8with%E7%BB%93%E6%9E%84%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">tf.GradientTape( )一定要在with结构下使用吗？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">神经网络基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E7%A4%BA%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">名词示意</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%87%8D%E7%BA%BF"><span class="nav-number">1.1.1.</span> <span class="nav-text">权重线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%86%B5"><span class="nav-number">1.2.</span> <span class="nav-text">概况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%97%E5%88%86%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">得分函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E5%88%A4%E6%96%AD%E8%BE%93%E5%85%A5%E7%9A%84%E7%9F%A9%E9%98%B5%E5%B1%9E%E4%BA%8E%E4%BB%80%E4%B9%88%E7%B1%BB%E5%88%AB"><span class="nav-number">1.3.1.</span> <span class="nav-text">用来判断输入的矩阵属于什么类别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E8%A1%A1%E9%87%8F%E8%AF%A5%E7%9B%AE%E5%89%8D%E8%AF%86%E5%88%AB%E5%87%BA%E6%9D%A5%E6%95%88%E6%9E%9C%E7%9A%84%E5%A5%BD%E5%9D%8F%EF%BC%8C%E5%80%BC%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD%EF%BC%8C%E8%8B%A5%E5%AE%8C%E5%85%A8%E6%AD%A3%E7%A1%AE%EF%BC%8C%E5%88%99%E5%80%BC%E4%B8%BA0"><span class="nav-number">1.4.1.</span> <span class="nav-text">用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax%E5%88%86%E7%B1%BB%E5%99%A8%EF%BC%88%E5%86%85%E5%AE%B9%E6%9C%89%E8%AF%AF%EF%BC%8C%E4%B9%8B%E5%90%8E%E5%86%8D%E6%94%B9%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">Softmax分类器（内容有误，之后再改）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.6.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%88%E9%93%BE%E5%BC%8F%E6%B1%82%E5%AF%BC%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">反向传播（链式求导）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">1.8.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">1.9.</span> <span class="nav-text">神经网络复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87%E5%8F%8A%E6%9D%83%E9%87%8D%E6%9B%B4%E6%96%B0"><span class="nav-number">1.10.</span> <span class="nav-text">学习率及权重更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tensorflow%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">tensorflow篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E9%87%8A%E4%B9%89"><span class="nav-number">2.1.</span> <span class="nav-text">名词释义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BF%E6%8F%92python%E8%AF%AD%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">穿插python语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#with%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.1.</span> <span class="nav-text">with结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enumerate-%E5%88%97%E8%A1%A8%E5%90%8D"><span class="nav-number">2.2.2.</span> <span class="nav-text">enumerate(列表名)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas%E5%BA%93%EF%BC%9A%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E7%9A%84%E6%8B%93%E5%B1%95%E5%BA%93%EF%BC%88%E5%8F%AF%E5%A4%84%E7%90%86exel%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">pandas库：处理数据的拓展库（可处理exel表格数据）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.1.</span> <span class="nav-text">读取目标文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dataframe%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">dataframe格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy%E5%BA%93"><span class="nav-number">2.4.</span> <span class="nav-text">numpy库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random-RandomState-rand-%E7%BB%B4%E5%BA%A6-%E7%BB%B4%E5%BA%A6%E4%B8%BA%E7%A9%BA%EF%BC%8C%E8%BF%94%E5%9B%9E%E6%A0%87%E9%87%8F"><span class="nav-number">2.4.1.</span> <span class="nav-text">np.random.RandomState.rand(维度)  #维度为空，返回标量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-vstack-%E6%95%B0%E7%BB%841%EF%BC%8C%E6%95%B0%E7%BB%842-%EF%BC%9A%E5%B0%86%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E6%8C%89%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E5%8F%A0%E5%8A%A0%EF%BC%88%E7%9B%B8%E6%8E%A5%EF%BC%89"><span class="nav-number">2.4.2.</span> <span class="nav-text">np.vstack(数组1，数组2)：将两个数组按垂直方向叠加（相接）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#np-mgrid-%EF%BC%8Cnp-mgrid-%EF%BC%8Cnp-c"><span class="nav-number">2.5.</span> <span class="nav-text">np.mgrid[]，np.mgrid[]，np.c_[]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">2.6.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BC%A0%E9%87%8F%EF%BC%9A"><span class="nav-number">2.6.1.</span> <span class="nav-text">创建张量：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F%E9%97%B4%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.6.2.</span> <span class="nav-text">张量间类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%BC%A0%E9%87%8F%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E5%80%BC"><span class="nav-number">2.6.3.</span> <span class="nav-text">寻找张量中的特殊值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E6%A0%87%E8%AE%B0%E4%B8%BA%E2%80%9C%E5%8F%AF%E8%AE%AD%E7%BB%83%E2%80%9D%EF%BC%9A%E8%A2%AB%E6%A0%87%E8%AE%B0%E7%9A%84%E5%8F%98%E9%87%8F%E4%BC%9A%E5%9C%A8%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%AD%E8%AE%B0%E5%BD%95%E6%A2%AF%E5%BA%A6%E4%BF%A1%E6%81%AF%E3%80%82"><span class="nav-number">2.6.4.</span> <span class="nav-text">将变量标记为“可训练”：被标记的变量会在反向传播中记录梯度信息。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%95%B0%E5%AD%A6%E8%BF%90%E7%AE%97"><span class="nav-number">2.6.5.</span> <span class="nav-text">简单数学运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%AF%BC%E8%BF%90%E7%AE%97%EF%BC%88%E6%B1%82%E6%A2%AF%E5%BA%A6%EF%BC%89"><span class="nav-number">2.6.6.</span> <span class="nav-text">求导运算（求梯度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E5%88%86%E4%BC%A0%E5%85%A5%E5%BC%A0%E9%87%8F%E7%9A%84%E7%AC%AC%E4%B8%80%E7%BB%B4%E5%BA%A6%EF%BC%8C%E7%94%9F%E6%88%90%E8%BE%93%E5%85%A5%E7%89%B9%E5%BE%81%E6%A0%87%E7%AD%BE%E5%AF%B9%EF%BC%8C%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E9%9B%86-Numpy%E5%92%8CTensor%E6%A0%BC%E5%BC%8F%E9%83%BD%E5%8F%AF%E7%94%A8%E8%AF%A5%E8%AF%AD%E5%8F%A5%E8%AF%BB%E5%85%A5%E6%95%B0%E6%8D%AE%EF%BC%89%E2%80%94%E2%80%94-%E7%9B%B8%E5%BA%94%E4%BD%8D%E7%BD%AE%E4%B8%80%E4%B8%80%E9%85%8D%E5%AF%B9"><span class="nav-number">2.6.7.</span> <span class="nav-text">切分传入张量的第一维度，生成输入特征标签对，构建数据集 (Numpy和Tensor格式都可用该语句读入数据）—— 相应位置一一配对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81%EF%BC%88one-hot-encoding%EF%BC%89-%E5%9C%A8%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%B8%AD%EF%BC%8C%E5%B8%B8%E7%94%A8%E7%8B%AC%E7%83%AD%E7%A0%81%E5%81%9A%E6%A0%87%E7%AD%BE-%E6%A0%87%E8%AE%B0%E7%B1%BB%E5%88%AB-1%E8%A1%A8%E7%A4%BA%E6%98%AF%EF%BC%8C0%E8%A1%A8%E7%A4%BA%E9%9D%9E%E3%80%82"><span class="nav-number">2.6.8.</span> <span class="nav-text">独热编码（one-hot encoding）:在分类问题中，常用独热码做标签,标记类别:1表示是，0表示非。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tf-nn-softmax-x-%E4%BD%BF%E8%BE%93%E5%87%BA%E7%AC%A6%E5%90%88%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%EF%BC%8C%E6%9C%89%E5%A4%9A%E5%B0%91%E4%B8%AA%E5%88%86%E7%B1%BB%E5%B0%B1%E7%94%A8%E5%A4%9A%E5%B0%91%E4%B8%AA%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.6.9.</span> <span class="nav-text">tf.nn.softmax(x) - 使输出符合概率分布，有多少个分类就用多少个返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#assign-sub-x-%E8%A6%81%E8%87%AA%E5%87%8F%E7%9A%84%E5%80%BC"><span class="nav-number">2.6.10.</span> <span class="nav-text">assign_sub(x(要自减的值))</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5-tf-where"><span class="nav-number">2.7.</span> <span class="nav-text">条件语句 tf.where()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%80%BC%E5%A4%A7%E5%B0%8Ftf-greater-a-b"><span class="nav-number">2.8.</span> <span class="nav-text">判断值大小tf.greater(a,b)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%85%AD%E6%AD%A5%E6%B3%95"><span class="nav-number">2.9.</span> <span class="nav-text">搭建神经网络六步法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E4%B8%8E%E6%A0%87%E7%AD%BE%E9%85%8D%E5%AF%B9%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">特征与标签配对是什么意思？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf-GradientTape-%E4%B8%80%E5%AE%9A%E8%A6%81%E5%9C%A8with%E7%BB%93%E6%9E%84%E4%B8%8B%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="nav-number">3.2.</span> <span class="nav-text">tf.GradientTape( )一定要在with结构下使用吗？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
