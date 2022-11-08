@@ -178,7 +178,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-19 16:31:44" itemprop="dateModified" datetime="2022-10-19T16:31:44+08:00">2022-10-19</time>
+                <time title="修改时间：2022-11-08 23:26:27" itemprop="dateModified" datetime="2022-11-08T23:26:27+08:00">2022-11-08</time>
               </span>
 
           
@@ -193,15 +193,19 @@
 
       
           <h1 id="神经网络基础篇"><a href="#神经网络基础篇" class="headerlink" title="神经网络基础篇"></a>神经网络基础篇</h1><h2 id="名词示意"><a href="#名词示意" class="headerlink" title="名词示意"></a>名词示意</h2><h3 id="权重线"><a href="#权重线" class="headerlink" title="权重线"></a>权重线</h3><ul>
-<li><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><ul>
+<li><p><br  /></p>
+</li>
+</ul>
+<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><ul>
 <li>层次结构</li>
 <li>神经元，即用来计算的的项</li>
 <li>全连接：如果增加一个神经元，会影响一整组数据，是乘积关系。因为前面所有神经元要与它连接，且它也要与后面所有神经元连接。</li>
-<li>非线性：有 $x<em>w1</em>w2<em>w3$, 若有 $ w4 = w1</em>w2<em>w3 $, 但不能用 $ w4 $ 替换 $w1</em>w2*w3$.</li>
-</ul>
+<li><p>非线性：有 $x<em>w1</em>w2<em>w3$, 若有 $ w4 = w1</em>w2<em>w3 $, 但不能用 $ w4 $ 替换 $w1</em>w2*w3$.</p>
+<p><br  /></p>
 </li>
 </ul>
-<h2 id="得分函数"><a href="#得分函数" class="headerlink" title="得分函数"></a>得分函数</h2><h3 id="用来判断输入的矩阵属于什么类别"><a href="#用来判断输入的矩阵属于什么类别" class="headerlink" title="用来判断输入的矩阵属于什么类别"></a>用来判断输入的矩阵属于什么类别</h3><ul>
+<h2 id="得分函数-前向传播"><a href="#得分函数-前向传播" class="headerlink" title="得分函数(前向传播)"></a>得分函数(前向传播)</h2><ul>
+<li>用来判断输入的矩阵属于什么类别</li>
 <li><script type="math/tex; mode=display">f(x)=Wx (+b)</script><ul>
 <li>W为 n 行 m 列的权重参数矩阵，n 行代表有 n 个权重参数（类别）, m 代表有整个图像矩阵有 m 个像素点 （把原权重矩阵拉成 1 行 m 列）<ul>
 <li>权重参数矩阵中，值较大的项表示，该像素点对该类别的影响比较重要。</li>
@@ -211,24 +215,64 @@
 <li>(+b) 为偏置参数（为 n 行 1 列， 与结果矩阵形式相同），用来微调</li>
 <li>f(x) 为运算结果， 是一个 n 行 1 列的矩阵（ n 行代表有 n 个类别）</li>
 </ul>
+<p><br  /></p>
 </li>
 </ul>
-<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><h3 id="用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0"><a href="#用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0" class="headerlink" title="用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0"></a>用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0</h3><ul>
-<li><script type="math/tex; mode=display">L_{i} = \sum_{j \neq y_{i}} \max \left(0, s_{j}-s_{y_{i}}+1\right)</script></li>
+<h2 id="损失函数（loss）"><a href="#损失函数（loss）" class="headerlink" title="损失函数（loss）"></a>损失函数（loss）</h2><ul>
+<li><p>用来衡量该目前识别出来效果的好坏，值越小越好，若完全正确，则值为0。也可以自己写损失函数。</p>
+<p><br  /></p>
+</li>
+<li><p>均方误差损失函数(MSE)</p>
+<ul>
+<li><code>loss_mse = tf.reduce_mean(tf.square(y_-y))</code></li>
+<li>$ \operatorname{MSE}\left(\mathrm{y}<em>{-}, \mathrm{y}\right)=\frac{\sum</em>{i=1}^{n}\left(y-y_{-}\right)^{2}}{n} $</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>交叉熵损失函数(CE):表征两个概率分布之间的距离</p>
+<ul>
+<li>$ \mathrm{H}\left(\mathrm{y}<em>{-}, \mathrm{y}\right)=-\sum y</em>{-} * \ln y $  #y表示预测结果的概率分布，y_表示标准答案的概率分布。</li>
+<li><code>tf.losses.categorical_crossentropy(y-, y)</code></li>
+<li>计算中，常先使用softmax分类，再通过交叉熵计算。再tensorflow中有将二者结合的公式：<ul>
+<li><code>tf.nn.softmax_cross entropy._with_logitsty_ y)</code></li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><script type="math/tex; mode=display">L_{i} = \sum_{j \neq y_{i}} \max \left(0, s_{j}-s_{y_{i}}+1\right)</script><p><br  /></p>
+</li>
 <li><script type="math/tex; mode=display">L=\frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)_{j}-f\left(x_{i} ; W\right)_{y_{i}}+1\right)+\lambda R(W)</script><ul>
 <li>$ \lambda R(W) $ 为正则惩罚项，用来消除突变值，减弱过拟合</li>
 </ul>
+<p><br  /></p>
 </li>
 </ul>
 <h2 id="Softmax分类器（内容有误，之后再改）"><a href="#Softmax分类器（内容有误，之后再改）" class="headerlink" title="Softmax分类器（内容有误，之后再改）"></a>Softmax分类器（内容有误，之后再改）</h2><ul>
 <li>$\operatorname{Softmax}\left(\mathrm{y}<em>{\mathrm{i}}\right)=\frac{\mathrm{e}^{y</em>{i}}}{\sum<em>{\mathrm{j}=0}^{n} \mathrm{e}^{y</em>{i}}} $</li>
+<li><p><code>tf.nn.softmax(x)</code></p>
+<p><br  /></p>
+</li>
 </ul>
+<h2 id="欠拟合与过拟合"><a href="#欠拟合与过拟合" class="headerlink" title="欠拟合与过拟合"></a>欠拟合与过拟合</h2><p>  <br  /></p>
 <h2 id="前向传播"><a href="#前向传播" class="headerlink" title="前向传播"></a>前向传播</h2><ul>
 <li>回归任务：用得分值计算损失。回归模型可预测连续值。  <script type="math/tex; mode=display">L=\frac{1}{N} \sum_{i=1}^{N} \sum_{j \neq y_{i}} \max \left(0, f\left(x_{i} ; W\right)_{j}-f\left(x_{i} ; W\right)_{y_{i}}+1\right)+\lambda R(W)</script></li>
-<li>分类任务：用概率值计算损失 。分类模型可预测离散值。<script type="math/tex; mode=display">-log(z)</script></li>
+<li><p>分类任务：用概率值计算损失 。分类模型可预测离散值。</p>
+<script type="math/tex; mode=display">-log(z)</script><p><br  /></p>
+</li>
 </ul>
-<h2 id="反向传播（链式求导）"><a href="#反向传播（链式求导）" class="headerlink" title="反向传播（链式求导）"></a>反向传播（链式求导）</h2><h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><ul>
-<li>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $<ul>
+<h2 id="反向传播（链式求导）"><a href="#反向传播（链式求导）" class="headerlink" title="反向传播（链式求导）"></a>反向传播（链式求导）</h2><p>  <br  /></p>
+<h2 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h2><ul>
+<li><ol>
+<li>首选relu激活函数；</li>
+<li>学习率设置较小值；</li>
+<li>输入特征标准化，即让输入特征满足以0为均值，1为标准差的正态分布；</li>
+<li>初始参数中心化,即让随机生成的参数满足以0为均值，$ \sqrt{\frac{2}{\text { 当前层输入特征个数 }}} $ 为标准差的正态分布。</li>
+</ol>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="Sigmoid函数-g-z-frac-1-1-e-z"><a href="#Sigmoid函数-g-z-frac-1-1-e-z" class="headerlink" title="Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $"></a>Sigmoid函数 $ g(z)=\frac{1}{1+e^{-z}} $</h3><ul>
 <li><code>tf.nn.sigmoid(x)</code> #现在基本不再使用<ul>
 <li><img src="https://note.youdao.com/s/cdefIVvi" alt="示例"></li>
 </ul>
@@ -242,10 +286,105 @@
 </ol>
 </li>
 </ol>
+<p><br  /></p>
 </li>
 </ul>
+<h3 id="Tanh函数-f-x-frac-1-e-2-x-1-e-2-x"><a href="#Tanh函数-f-x-frac-1-e-2-x-1-e-2-x" class="headerlink" title="Tanh函数 $ f(x)=\frac{1-e^{-2 x}}{1+e^{-2 x}} $"></a>Tanh函数 $ f(x)=\frac{1-e^{-2 x}}{1+e^{-2 x}} $</h3><ul>
+<li><p><code>tf.math.tanh(x)</code> #与sigmoid同理</p>
+<p><br  /></p>
 </li>
-<li><p>Relu函数 $ \sigma(x)=\max (0, x) $</p>
+</ul>
+<h3 id="Relu函数"><a href="#Relu函数" class="headerlink" title="Relu函数"></a>Relu函数</h3><p>$ \begin{aligned}<br>f(x) &amp;=\max (x, 0) \<br>&amp;=\left{\begin{array}{ll}<br>0 &amp; x<0 \\
+x & x>=0<br>\end{array}\right.<br>\end{aligned} $</p>
+<ul>
+<li><p><code>tf.nn.relu(x)</code></p>
+<ul>
+<li><ol>
+<li>解决了梯度消失问题(在正区间)</li>
+<li>只需判断输入是否大于0，计算速度快</li>
+<li>收敛速度远快于sigmoid和Itanh</li>
+</ol>
+</li>
+<li><ol>
+<li>输出非0均值,收敛慢</li>
+<li>Dead RelU问题:某些神经元可能永远不会激活</li>
+</ol>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="Leaky-Relu函数-f-x-max-alpha-x-x"><a href="#Leaky-Relu函数-f-x-max-alpha-x-x" class="headerlink" title="Leaky Relu函数 $ f(x)=\max (\alpha x, x) $"></a>Leaky Relu函数 $ f(x)=\max (\alpha x, x) $</h3><ul>
+<li><code>tf.nn.leaky_relu(x)</code> </li>
+<li><p>解决了relu在负区导数为0的问题，理论上优于relu，但无实际证明总是好于relu。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="缓解过拟合"><a href="#缓解过拟合" class="headerlink" title="缓解过拟合"></a>缓解过拟合</h2><h3 id="正则化缓解过拟合"><a href="#正则化缓解过拟合" class="headerlink" title="正则化缓解过拟合"></a>正则化缓解过拟合</h3><ul>
+<li>正则化在损失函数中引入模型复杂度指标，利用给W加权值，弱化了训练数据的噪声（一般不正则化b)</li>
+<li><script type="math/tex; mode=display">\text { loss }=\operatorname{loss}\left(y \text { 与 } y_{-}\right)+\text {REGULARIZER * } \operatorname{loss}(w)</script><ul>
+<li>超参数REGULARIZER:给出参数w在总loss中的比例，即正则化的权重</li>
+<li>w为需要正则化的参数</li>
+<li>$ loss(w) $有两种形式：<ol>
+<li>$ \operatorname{loss}<em>{L 1}(w)=\sum</em>{i}\left|w_{i}\right| $</li>
+<li>$ \operatorname{loss}<em>{L 2}(w)=\sum</em>{i}\left|w_{i}^{2}\right| $</li>
+</ol>
+</li>
+<li>正则化的选择<ul>
+<li>L1正则化大概率会使很多参数变为零，因此该方法可通过稀疏参数，即”减少参数的数量”，降低复杂度。</li>
+<li>L2正则化会使参数很接近零但不为零，因此该方法可通过”减小参数值”的大小降低复杂度。</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="优化器-用来引导参数更新"><a href="#优化器-用来引导参数更新" class="headerlink" title="优化器: 用来引导参数更新"></a>优化器: 用来引导参数更新</h2><ul>
+<li>待优化参数w，损失函数loss，学习率r，每次迭代一个batch,t表示当前batch迭代的总次数:<ol>
+<li>计算时刻损失函数关于当前参数的梯度 $ g<em>{t}=\nabla \operatorname{loss}=\frac{\partial \operatorname{loss}}{\partial\left(w</em>{\mathrm{t}}\right)} $</li>
+<li>计算t时刻一阶动量mt和二阶动量Vt</li>
+<li>计算t时刻下降梯度: $ \boldsymbol{\eta}<em>{\mathrm{t}}=\boldsymbol{l} \boldsymbol{r} \cdot \boldsymbol{m}</em>{\mathrm{t}} / \sqrt{\boldsymbol{V}_{\mathrm{t}}} $</li>
+<li>计算t+1时刻参数: $ w<em>{\mathrm{t}+1}=w</em>{t}-\eta<em>{t}=w</em>{t}-l r \cdot m<em>{t} / \sqrt{V</em>{t}} $<ul>
+<li>一阶动量:与梯度相关的函数</li>
+<li>二阶动量:与梯度平方相关的函数</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>不同的优化器实际上是定义了不同的一阶动量和二阶动量的表达公式。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="SGD-（无momentum），常用的梯度下降法。"><a href="#SGD-（无momentum），常用的梯度下降法。" class="headerlink" title="SGD （无momentum），常用的梯度下降法。"></a>SGD （无momentum），常用的梯度下降法。</h3><ul>
+<li><p>$ \begin{array}{c}<br>m<em>{\mathrm{t}}=\boldsymbol{g}</em>{\mathrm{t}} \quad V<em>{\mathrm{t}}=1 \<br>\eta</em>{\mathrm{t}}=\boldsymbol{l r} \cdot \boldsymbol{m}<em>{\mathrm{t}} / \sqrt{V</em>{t}}=\boldsymbol{l r} \cdot \boldsymbol{g}<em>{\boldsymbol{t}} \<br>w</em>{\mathrm{t}+1}=w<em>{t}-\boldsymbol{\eta}</em>{t} \<br>=w<em>{t}-l r \cdot m</em>{t} / \sqrt{V<em>{t}}=w</em>{t}-l r \cdot g<em>{t} \<br>\mathrm{w}</em>{\mathrm{t}+1}=w<em>{t}-l r * \frac{\partial \operatorname{loss}}{\partial w</em>{t}}<br>\end{array} $</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="SGDM（含momentum的SGD-，在SGD基础上增加一阶动量。"><a href="#SGDM（含momentum的SGD-，在SGD基础上增加一阶动量。" class="headerlink" title="SGDM（含momentum的SGD)，在SGD基础上增加一阶动量。"></a>SGDM（含momentum的SGD)，在SGD基础上增加一阶动量。</h3><ul>
+<li><p>$ \begin{array}{l}<br>m<em>{\mathrm{t}}=\boldsymbol{\beta} \cdot \boldsymbol{m}</em>{t-1}+(1-\boldsymbol{\beta}) \cdot \boldsymbol{g}<em>{t}\<br>V</em>{t}=1\<br>\eta<em>{\mathrm{t}}=\boldsymbol{l} \boldsymbol{r} \cdot \boldsymbol{m}</em>{\mathrm{t}} / \sqrt{V<em>{\mathrm{t}}}=\boldsymbol{l r} \cdot \boldsymbol{m}</em>{\mathrm{t}}\<br>=\boldsymbol{l r} \cdot\left(\boldsymbol{\beta} \cdot \boldsymbol{m}<em>{\mathrm{t}-\mathbf{1}}+(\boldsymbol{1}-\boldsymbol{\beta}) \cdot \boldsymbol{g}</em>{\mathrm{t}}\right)\<br>w<em>{\mathrm{t}+1}=\boldsymbol{w}</em>{\mathrm{t}}-\boldsymbol{\eta}<em>{\mathrm{t}}\<br>=w</em>{\mathrm{t}}-\boldsymbol{l r} \cdot\left(\boldsymbol{\beta} \cdot \boldsymbol{m}<em>{\mathrm{t}-1}+(\boldsymbol{1}-\boldsymbol{\beta}) \cdot \boldsymbol{g}</em>{\mathrm{t}}\right)<br>\end{array} $</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="Adagrad，在SGD基础上增加二阶动量"><a href="#Adagrad，在SGD基础上增加二阶动量" class="headerlink" title="Adagrad，在SGD基础上增加二阶动量"></a>Adagrad，在SGD基础上增加二阶动量</h3><ul>
+<li><p>$ \begin{aligned}<br>m<em>{\mathrm{t}} &amp;=g</em>{t} \quad V<em>{t}=\sum</em>{\tau=1}^{\mathrm{t}} g<em>{\tau}^{2} \<br>\eta</em>{\mathrm{t}} &amp;=\boldsymbol{l r} \cdot \boldsymbol{m}<em>{t} /\left(\sqrt{\boldsymbol{V}</em>{t}}\right) \<br>&amp;=\boldsymbol{l r} \cdot g<em>{t} /\left(\sqrt{\sum</em>{\tau=1}^{t} g<em>{\tau}^{2}}\right) \<br>w</em>{t+1}=&amp; w<em>{t}-\boldsymbol{\eta}</em>{t} \<br>&amp;=w<em>{t}-\boldsymbol{l r} \cdot g</em>{t} /\left(\sqrt{\sum<em>{\tau=1}^{t} g</em>{\tau}^{2}}\right)<br>\end{aligned} $</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="RMSProp-SGD基础上增加二阶动量"><a href="#RMSProp-SGD基础上增加二阶动量" class="headerlink" title="RMSProp,SGD基础上增加二阶动量"></a>RMSProp,SGD基础上增加二阶动量</h3><ul>
+<li><p>$ \begin{aligned}<br>m<em>{\mathrm{t}} &amp;=\boldsymbol{g}</em>{t} \quad V<em>{t}=\boldsymbol{\beta} \cdot V</em>{t-1}+(1-\boldsymbol{\beta}) \cdot g<em>{t}^{2} \<br>\eta</em>{t}=&amp; \boldsymbol{l r} \cdot \boldsymbol{m}<em>{\mathrm{t}} / \sqrt{V</em>{\mathrm{t}}} \<br>&amp;=\boldsymbol{l r} \cdot \boldsymbol{g}<em>{t} /\left(\sqrt{\boldsymbol{\beta} \cdot \boldsymbol{V}</em>{t-1}+(1-\boldsymbol{\beta}) \cdot \boldsymbol{g}<em>{t}^{2}}\right) \<br>w</em>{t+1} &amp;=w<em>{t}-\boldsymbol{\eta}</em>{t} \<br>&amp;=w<em>{t}-\boldsymbol{l r} \cdot \boldsymbol{g}</em>{t} /\left(\sqrt{\boldsymbol{\beta} \cdot V<em>{t-1}+(1-\boldsymbol{\beta}) \cdot \boldsymbol{g}</em>{t}^{2}}\right)<br>\end{aligned} $</p>
+<p><br  /></p>
+</li>
+</ul>
+<h3 id="Adam-同时结合SGDM一阶动量和RMSProp二阶动量"><a href="#Adam-同时结合SGDM一阶动量和RMSProp二阶动量" class="headerlink" title="Adam,同时结合SGDM一阶动量和RMSProp二阶动量"></a>Adam,同时结合SGDM一阶动量和RMSProp二阶动量</h3><ul>
+<li>$ m<em>{\mathrm{t}}=\beta</em>{1} \cdot m<em>{t-1}+\left(1-\beta</em>{1}\right) \cdot g_{t} $<ul>
+<li>$ \text { 修正一阶动量的偏差: } \widehat{m<em>{t}}=\frac{m</em>{\mathrm{t}}}{1-\beta_{1}{ }^{t}} $</li>
+</ul>
+</li>
+<li>$ V<em>{t}=\boldsymbol{\beta}</em>{2} \cdot V<em>{\text {step }-1}+\left(1-\boldsymbol{\beta}</em>{2}\right) \cdot \boldsymbol{g}_{t}^{2} $<ul>
+<li>$ \text { 修正二阶动量的偏差: } \widehat{V<em>{t}}=\frac{V</em>{t}}{1-\beta_{2}{ }^{t}} $</li>
+</ul>
+</li>
+<li><p>$ \begin{aligned}<br>\eta<em>{t}=&amp; \boldsymbol{l r} \cdot \widehat{m}</em>{\mathrm{t}} / \sqrt{\widehat{V}<em>{t}} \<br>&amp;=l r \cdot \frac{m</em>{\mathrm{t}}}{1-\beta<em>{1}{ }^{t}} / \sqrt{\frac{V</em>{t}}{1-\beta<em>{2}{ }^{t}}} \<br>w</em>{t+1} &amp;=\boldsymbol{w}<em>{t}-\boldsymbol{\eta}</em>{t} \<br>&amp;=w<em>{t}-\operatorname{lr} \cdot \frac{m</em>{\mathrm{t}}}{1-\beta<em>{1}{ }^{t}} / \sqrt{\frac{V</em>{t}}{1-\beta_{2}{ }^{t}}}<br>\end{aligned} $</p>
 <p><br  /></p>
 </li>
 </ul>
@@ -268,20 +407,24 @@
 <h2 id="学习率及权重更新"><a href="#学习率及权重更新" class="headerlink" title="学习率及权重更新"></a>学习率及权重更新</h2><ul>
 <li>$ w<em>{t+1}=w</em>{t}-\operatorname{lr} * \frac{\partial \operatorname{loss}}{\partial w_{t}} $ #lr为学习率，即每次更新的跨度。过小会慢，过大会不收敛。？</li>
 <li>可以先用较大的学习率，快速得到较优解，然后逐步减小学习率，使模型在训练后期稳定。</li>
-<li>寻找合适的学习率<ul>
-<li>指数衰减学习率=初始学习率*学习率衰减率（当前轮数/多少轮衰减一次）<h1 id="tensorflow篇"><a href="#tensorflow篇" class="headerlink" title="tensorflow篇"></a>tensorflow篇</h1><h2 id="名词释义"><a href="#名词释义" class="headerlink" title="名词释义"></a>名词释义</h2></li>
-<li>模型</li>
+<li><p>寻找合适的学习率</p>
+<ul>
+<li>指数衰减学习率=初始学习率*学习率衰减率（当前轮数/多少轮衰减一次）</li>
 </ul>
-</li>
-<li>模型定义了特征与标签之间的关系。<ul>
-<li>训练</li>
-</ul>
-</li>
-<li><p>训练是指创建或学习模型。也就是说，向模型展示有标签样本，让模型逐渐学习特征与标签之间的关系。</p>
 <p><br  /></p>
 </li>
 </ul>
+<h1 id="tensorflow篇"><a href="#tensorflow篇" class="headerlink" title="tensorflow篇"></a>tensorflow篇</h1><h2 id="名词释义"><a href="#名词释义" class="headerlink" title="名词释义"></a>名词释义</h2><ul>
+<li>模型<ul>
+<li>模型定义了特征与标签之间的关系。</li>
+</ul>
+</li>
+<li><p>训练</p>
 <ul>
+<li>训练是指创建或学习模型。也就是说，向模型展示有标签样本，让模型逐渐学习特征与标签之间的关系。</li>
+</ul>
+<p><br  /></p>
+</li>
 <li><p>张量（Tensor):多维数组（列表)</p>
 <ul>
 <li>阶:张量的维数<ul>
@@ -319,6 +462,12 @@
 <li><p>标签 </p>
 <ul>
 <li>标签是我们要预测的事物，即简单线性回归中的 y 变量。标签可以是小麦未来的价格、图片中显示的动物品种、音频剪辑的含义或任何事物, 即结论。</li>
+</ul>
+<p><br  /></p>
+</li>
+<li><p>超参数</p>
+<ul>
+<li>超参数是指不在函数内的参数，是我们自己额外给的参数。</li>
 </ul>
 <p><br  /></p>
 </li>
@@ -518,7 +667,7 @@
 <p><br  /></p>
 </li>
 </ul>
-<h2 id="搭建神经网络六步法"><a href="#搭建神经网络六步法" class="headerlink" title="搭建神经网络六步法"></a>搭建神经网络六步法</h2><ul>
+<h2 id="Sequential搭建神经网络六步法-顺序网络结构"><a href="#Sequential搭建神经网络六步法-顺序网络结构" class="headerlink" title="Sequential搭建神经网络六步法(顺序网络结构)"></a>Sequential搭建神经网络六步法(顺序网络结构)</h2><ul>
 <li><p>import相关模块</p>
 <p><br  /></p>
 </li>
@@ -559,12 +708,174 @@
 <p><br  /></p>
 </li>
 </ul>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="特征与标签配对是什么意思？"><a href="#特征与标签配对是什么意思？" class="headerlink" title="特征与标签配对是什么意思？"></a>特征与标签配对是什么意思？</h2><ul>
-<li><p>标签是用来标记特征是否有用的？</p>
+<h2 id="class搭建神经网络结构六步法-带有跳连的结构-！！！（没懂，先放着）"><a href="#class搭建神经网络结构六步法-带有跳连的结构-！！！（没懂，先放着）" class="headerlink" title="class搭建神经网络结构六步法(带有跳连的结构)！！！（没懂，先放着）"></a>class搭建神经网络结构六步法(带有跳连的结构)！！！（没懂，先放着）</h2><p>  <br  /></p>
+<h2 id="使用自制数据集"><a href="#使用自制数据集" class="headerlink" title="使用自制数据集"></a>使用自制数据集</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1B7411L7Qt?p=20&amp;vd_source=28e3d226a5d356b023f32eac68624fb4">https://www.bilibili.com/video/BV1B7411L7Qt?p=20&amp;vd_source=28e3d226a5d356b023f32eac68624fb4</a> </p>
 <p><br  /></p>
 </li>
 </ul>
-<h2 id="tf-GradientTape-一定要在with结构下使用吗？"><a href="#tf-GradientTape-一定要在with结构下使用吗？" class="headerlink" title="tf.GradientTape( )一定要在with结构下使用吗？"></a>tf.GradientTape( )一定要在with结构下使用吗？</h2>
+<h2 id="数据增强-增大数据量-：可以对少量数据进行不同的随机操作，从而产生新的数据。"><a href="#数据增强-增大数据量-：可以对少量数据进行不同的随机操作，从而产生新的数据。" class="headerlink" title="数据增强(增大数据量)：可以对少量数据进行不同的随机操作，从而产生新的数据。"></a>数据增强(增大数据量)：可以对少量数据进行不同的随机操作，从而产生新的数据。</h2><ul>
+<li><p>Tensorflow2给出了数据增强函数</p>
+<ul>
+<li>要引入模块：from tensorflow.keras.preprocessing.image import ImageDataGenerator</li>
+<li>image_gen_train = tf.keras.preprocessing.image.ImageDataGenerator(<br /><br>rescale = 所有数据将乘以阂数值, <br /><br>rotation_range  =  随机旋转角度数范围,<br /><br>width_shift_range  =  随机䆕度偏移量,<br /><br>height_shift_range  =  随机高度㐹移量,<br /><br>水平翻转: horizontal_flip = 是否随机水平翻转,<br /><br>随机缩放: zoom_range = 随机缩放的范围 [1-n, 1+n] )<br /><br><br /><br>image_gen_train.fit(x_train)<ul>
+<li>这里的x_train需要一个四维数据，因此我们需要对其进行修改。</li>
+<li>x_train = x_train.reshape(x_train.shape[0], 28, 28, 1) —— 新增一个维度，表示图片的通道数量。</li>
+</ul>
+</li>
+<li>但使用这种数据增强后，传入fit的前三个数要以这种形式打包输入：model.fit(image gen train.flow(x_train, y_train, batch_size=32), …)</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="读取已训模型-ckpt文件"><a href="#读取已训模型-ckpt文件" class="headerlink" title="读取已训模型(ckpt文件)"></a>读取已训模型(ckpt文件)</h2><ul>
+<li><p><code>model.load_weights(&quot;文件路径&quot;)</code></p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="保存模型"><a href="#保存模型" class="headerlink" title="保存模型"></a>保存模型</h2><ul>
+<li>tf.keras.callbacks.ModelCheckpoint(<br /> filepath=路径, <br /> save<em>weights</em> only=True/False,(是否只保留模型参数) <br /> save_best_only=True/False(是否只保留最优结果))</li>
+<li><p>history = model.fit(…, callbacks=lcp_callback)，执行fit时加入callbacks参数来保存模型。在对应的目录下建立checkpoint文件夹，并返回模型给history？下次训练时会自动加载模型。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="提取模型参数"><a href="#提取模型参数" class="headerlink" title="提取模型参数"></a>提取模型参数</h2><ul>
+<li><p><code>model.trainable_variables</code> #返回模型中可训练的参数</p>
+<ul>
+<li>用print输出参数<ul>
+<li>设置print输出格式：np.set printoptions(threshold=超过多少省略显示) #np.inf表示无限大 <br />print(model.trainable_variables)</li>
+</ul>
+</li>
+<li>保存至文档中<ul>
+<li>file = open(‘./weights.txt’, ‘w)<br />for v in model.trainable_variables:<br />file.write(str(v.name) + ‘ \n’)<br />file.write(str(v.shape) + ‘\n’)<br />file.write(str(v.numpy())+ ‘\n’)<br />file.close()</li>
+</ul>
+</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h2><ul>
+<li><p>matplotlib库</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="给图识物（模型应用）"><a href="#给图识物（模型应用）" class="headerlink" title="给图识物（模型应用）"></a>给图识物（模型应用）</h2><ul>
+<li><ol>
+<li>搭建模型，已训好的模型</li>
+</ol>
+</li>
+<li><ol>
+<li>加载参数，即要放进网络的图片</li>
+</ol>
+<ul>
+<li>要对放入的图片进行预处理，使其与训练集的图片的大小，颜色等一样。</li>
+</ul>
+</li>
+<li><ol>
+<li>预测结果，<code>result = predict(输入特征，batch_size=整数)</code></li>
+</ol>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="TF中描述卷积层"><a href="#TF中描述卷积层" class="headerlink" title="TF中描述卷积层"></a>TF中描述卷积层</h2><ul>
+<li><p>tf.keras.layers.Conv2D(<br>filters=卷积核个数,<br>kernel_size=卷积核尺寸, #正方形写核长整数，或(核高h,核宽w),<br>strides=滑动步长, #横纵向相同写步长整数，或(纵向步长h，横向步长w)，默认1<br>padding =“same” or “valid”,#使用全零填充是”same”，不使用是”valid”（默认)<br>activation= “ relu “ or “ sigmoid “ or “ tanh “ or “ softmax”等, #如有BN(批标准化操作)此处不写<br>input_shape=(高,宽,通道数)#输入特征图维度，可省略)</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="TF中描述批标准化"><a href="#TF中描述批标准化" class="headerlink" title="TF中描述批标准化"></a>TF中描述批标准化</h2><ul>
+<li><p><code>tf.keras.layers.BatchNormalization()</code> #加在卷积层之后和激活层之前</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="TF中描述池化"><a href="#TF中描述池化" class="headerlink" title="TF中描述池化"></a>TF中描述池化</h2><ul>
+<li>tf.keras.layers.MaxPoo12D(<br>pool_size=池化核尺寸，#正方形写核长整数，或（核高h，核宽w）— 以元组形式给出长宽<br>strides=池化步长，#步长整数，或(纵向步长h，横向步长w)<br>padding=’valid’or’same’)<h1 id="最大值池化"><a href="#最大值池化" class="headerlink" title="最大值池化"></a>最大值池化</h1></li>
+<li><p>tf.keras.layers.AveragePooling2D(…)</p>
+<h1 id="均值池化"><a href="#均值池化" class="headerlink" title="均值池化"></a>均值池化</h1><p><br  /></p>
+</li>
+</ul>
+<h2 id="TF中描述舍弃"><a href="#TF中描述舍弃" class="headerlink" title="TF中描述舍弃"></a>TF中描述舍弃</h2><ul>
+<li><p>在神经网络训练时，将一部分神经元按照一定概率从神经网络中暂时舍弃。神经网络使用时，被舍弃的神经元恢复链接。</p>
+<ul>
+<li><code>tf.keras.layers.Dropout(舍弃的概率)</code> #舍弃概率的取值范围(0,1)</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h1 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h1><ul>
+<li>卷积在图像识别神经网络中的作用，就是特征提取。卷积即特征提取器。</li>
+</ul>
+<h2 id="卷积核：卷积核层数与图像通道数相同，每层相应参数相乘求和，最终一起求和得到一个特征点。该过程称为卷积计算过程。提高卷积核数量可以提高特征提取能力。"><a href="#卷积核：卷积核层数与图像通道数相同，每层相应参数相乘求和，最终一起求和得到一个特征点。该过程称为卷积计算过程。提高卷积核数量可以提高特征提取能力。" class="headerlink" title="卷积核：卷积核层数与图像通道数相同，每层相应参数相乘求和，最终一起求和得到一个特征点。该过程称为卷积计算过程。提高卷积核数量可以提高特征提取能力。"></a>卷积核：卷积核层数与图像通道数相同，每层相应参数相乘求和，最终一起求和得到一个特征点。该过程称为卷积计算过程。提高卷积核数量可以提高特征提取能力。</h2><ul>
+<li><p>卷积核的内容：几乘几，内容，层数，每次移动步长。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="感受野：即经过提取后的特征图，在原图像上所占的大小（如5x5，感受野就是5，一般就是正方形）。不管经过几次计算，只与最终的特征图和原始图有关。"><a href="#感受野：即经过提取后的特征图，在原图像上所占的大小（如5x5，感受野就是5，一般就是正方形）。不管经过几次计算，只与最终的特征图和原始图有关。" class="headerlink" title="感受野：即经过提取后的特征图，在原图像上所占的大小（如5x5，感受野就是5，一般就是正方形）。不管经过几次计算，只与最终的特征图和原始图有关。"></a>感受野：即经过提取后的特征图，在原图像上所占的大小（如5x5，感受野就是5，一般就是正方形）。不管经过几次计算，只与最终的特征图和原始图有关。</h2><ul>
+<li>感受野代表了特征提取能力，如果通过不同方式，最终提取出的特征图的感受野相同，那么他们的特征提取能力就相同。只是计算复杂度不同。取舍的情况要看具体的图片大小。（一般图片越大，则选择层数更多的提取方式）</li>
+<li><p>例子：可用 两层3x3卷积核 替代 1层5x5卷积核。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="全零填充：为了保证提取后的特征图与输入特征的大小一致"><a href="#全零填充：为了保证提取后的特征图与输入特征的大小一致" class="headerlink" title="全零填充：为了保证提取后的特征图与输入特征的大小一致"></a>全零填充：为了保证提取后的特征图与输入特征的大小一致</h2><ul>
+<li><p>特征图边长：</p>
+<ul>
+<li>$ S A M E(  全0填充充  ) : \frac{\text { 边长 }}{\text { 步长 }} (向上取整) $ </li>
+<li>$ VALID（不全0填充）: \frac{\text { 边长一核长 }+1}{\text { 步长 }} （向上取整）$</li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="批标准化-BN"><a href="#批标准化-BN" class="headerlink" title="批标准化(BN)"></a>批标准化(BN)</h2><ul>
+<li>神经网络对0附近的数据更敏感：使数据位于激活函数的线性区（如sigmoid函数的0附近），使其更敏感</li>
+<li>标准化:使数据符合0均值，1为标准差的分布。</li>
+<li>批标准化:对一小批数据（batch），做标准化处理。</li>
+<li>$ H<em>{i}^{\prime k}=\frac{H</em>{i}^{k}-\mu<em>{\mathrm{batch}}^{k}}{\sigma</em>{\mathrm{batch}}^{k}} $ #对每个像素点进行标准化<ul>
+<li><script type="math/tex; mode=display">\\H_{i}^{k}  : 批标准化前, 第  \mathrm{k}  个卷积核, 输出特征图中第  \mathrm{i}  个像素点\\u_{\text {batch }}^{k}  : 批标准化前, 第  \mathrm{k}  个卷积核, batch张输出特征图中所有像素点平均值\\\sigma_{\text {batch }}^{k}  : 批标准化前, 第  k  个卷积核, batch张输出特征图中所有像素点标准差</script></li>
+</ul>
+</li>
+<li>但如果仅使用 $ H<em>{i}^{\prime k}=\frac{H</em>{i}^{k}-\mu<em>{\mathrm{batch}}^{k}}{\sigma</em>{\mathrm{batch}}^{k}} $ 进行标准化，会使激活函数失去非线性区的特性。</li>
+<li><p>通过下式拓宽区域，保证激活函数的非线性特性</p>
+<ul>
+<li><script type="math/tex; mode=display">\begin{array}{r}
+X_{\mathrm{i}}^{k}=\gamma_{\mathrm{k}} \boldsymbol{H}_{\mathrm{i}}^{\boldsymbol{k}}+\boldsymbol{\beta}_{\mathrm{k}}\\
+\begin{array}{cc}
+\uparrow & \uparrow \\
+\text { 缩放 } & \text { 偏移 } \\
+\text { 因子 } & \text { 因子 }
+\end{array}
+\end{array}</script></li>
+</ul>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><ul>
+<li>池化用于减少特征数据量。取核范围内的最大值。</li>
+<li><p>最大值池化可提取图片纹理,均值池化可保留背景特征。取核范围内的平均值。</p>
+<p>&lt;br </p>
+</li>
+</ul>
+<h2 id="舍弃"><a href="#舍弃" class="headerlink" title="舍弃"></a>舍弃</h2><ul>
+<li><p>在神经网络训练时，将一部分神经元按照一定概率从神经网络中暂时舍弃。神经网络使用时，被舍弃的神经元恢复链接。</p>
+<p><br  /></p>
+</li>
+</ul>
+<h2 id="搭建卷积神经网络层总结（CBAPD）"><a href="#搭建卷积神经网络层总结（CBAPD）" class="headerlink" title="搭建卷积神经网络层总结（CBAPD）"></a>搭建卷积神经网络层总结（CBAPD）</h2><ul>
+<li>C：Convolutional:卷积计算层</li>
+<li>B：BN：批标准化</li>
+<li>A：Activation：激活函数</li>
+<li>P：Pooling：池化</li>
+<li><p>D：Dropout：舍弃</p>
+<p><br  /></p>
+</li>
+</ul>
+<h1 id="循环层"><a href="#循环层" class="headerlink" title="循环层"></a>循环层</h1><h2 id="循环核"><a href="#循环核" class="headerlink" title="循环核"></a>循环核</h2><p>  <br  /></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="特征与标签配对是什么意思？"><a href="#特征与标签配对是什么意思？" class="headerlink" title="特征与标签配对是什么意思？"></a>特征与标签配对是什么意思？</h2><ul>
+<li>标签是用来标记特征是否有用的？</li>
+<li>还是说标签指的是求解的目标。即如果要在一堆图片中找到猫的图片，则我在训练集中放入猫的图片并使这些图片的标签为猫。训练后，把测试集放入模型，最终它把测试集中最符合猫的图片标记为猫。</li>
+</ul>
+<h2 id="tf-GradientTape-一定要在with结构下使用吗？"><a href="#tf-GradientTape-一定要在with结构下使用吗？" class="headerlink" title="tf.GradientTape( )一定要在with结构下使用吗？"></a>tf.GradientTape( )一定要在with结构下使用吗？</h2><h2 id="如何使输入特征标准化？"><a href="#如何使输入特征标准化？" class="headerlink" title="如何使输入特征标准化？"></a>如何使输入特征标准化？</h2><ul>
+<li>一般采取/255.0这样的操作。</li>
+</ul>
+<h2 id="什么是权重线？"><a href="#什么是权重线？" class="headerlink" title="什么是权重线？"></a>什么是权重线？</h2><h2 id="如何使初始参数中心化？"><a href="#如何使初始参数中心化？" class="headerlink" title="如何使初始参数中心化？"></a>如何使初始参数中心化？</h2><h2 id="有多少个分类，全连接层的最后一层就要有几个神经元？"><a href="#有多少个分类，全连接层的最后一层就要有几个神经元？" class="headerlink" title="有多少个分类，全连接层的最后一层就要有几个神经元？"></a>有多少个分类，全连接层的最后一层就要有几个神经元？</h2><h2 id="概率舍弃神经元有什么用？"><a href="#概率舍弃神经元有什么用？" class="headerlink" title="概率舍弃神经元有什么用？"></a>概率舍弃神经元有什么用？</h2><h2 id="卷积核内的参数是什么，为什么说是可以训练的？"><a href="#卷积核内的参数是什么，为什么说是可以训练的？" class="headerlink" title="卷积核内的参数是什么，为什么说是可以训练的？"></a>卷积核内的参数是什么，为什么说是可以训练的？</h2><h2 id="激活函数的非线性区和线性区分别有什么作用？"><a href="#激活函数的非线性区和线性区分别有什么作用？" class="headerlink" title="激活函数的非线性区和线性区分别有什么作用？"></a>激活函数的非线性区和线性区分别有什么作用？</h2><h2 id="各种优化器的区别和用途。"><a href="#各种优化器的区别和用途。" class="headerlink" title="各种优化器的区别和用途。"></a>各种优化器的区别和用途。</h2>
       
     </div>
 
